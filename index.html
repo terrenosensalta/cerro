@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cerro Varnet | Reserva Natural Privada en Salta</title>
-<meta name="description" content="Reserva natural privada a 20 minutos del centro de Salta. Senderos para cada paso, mapa de la reserva y naturaleza pura sin salir de la ciudad.">
+<meta name="description" content="Reserva natural privada a 20 minutos del centro de Salta. Senderos para cada paso, educación ambiental y naturaleza pura sin salir de la ciudad.">
 <meta property="og:title" content="Cerro Varnet — Reserva Natural Privada">
 <meta property="og:description" content="Conectá con la naturaleza a 20 minutos del centro de Salta.">
 <meta property="og:type" content="website">
@@ -31,7 +31,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="assets/models/colibri.bin" as="fetch" type="application/octet-stream" crossorigin>
 <style>
   :root {
@@ -160,46 +159,7 @@
   .level i b { width: 14px; height: 4px; border-radius: 2px; background: rgba(183,228,199,.25); }
   .level i b.on { background: var(--moss); }
 
-  /* 03 · MAPA DE LA RESERVA */
-  .smap { background: linear-gradient(180deg, #e4f2e9 0%, var(--sand) 100%); z-index: 1; }
-  .smap .text { position: relative; z-index: 2; }
-  .legend { display: grid; gap: 10px; margin-top: 22px; padding: 0; }
-  .legend li { list-style: none; display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--ink); }
-  .lg { flex: none; display: inline-grid; place-items: center; width: 26px; height: 14px; font-style: normal; }
-  .lg--reserva { height: 14px; border: 2px dashed var(--leaf); border-radius: 4px; background: rgba(82,183,136,.18); }
-  .lg--sendero { height: 4px; border-radius: 2px; background: #e85d8f; box-shadow: 0 0 0 1.5px #fff; }
-  .lg--acceso { height: 0; border-top: 3px dashed var(--forest); }
-  .lg--nivel { width: 22px; height: 22px; margin: 0 2px; border-radius: 50%; background: var(--forest); color: var(--mint); font-size: 11px; font-weight: 700; }
-  .lg--fauna { width: 14px; height: 14px; margin: 0 6px; border-radius: 50%; background: var(--moss); box-shadow: 0 0 0 3px rgba(82,183,136,.28); }
-  .map-wrap { position: relative; z-index: 1; height: 64vh; min-height: 380px; margin: 0 -8px; border-radius: 22px; overflow: hidden; background: #1f3a2c; box-shadow: 0 30px 60px -20px rgba(8,28,21,.35), 0 0 0 1px rgba(8,28,21,.08); }
-  #map { position: absolute; inset: 0; background: #1f3a2c; font-family: inherit; }
-  .map-fit { position: absolute; z-index: 500; left: 14px; top: 14px; font: 600 12.5px/1 "Plus Jakarta Sans", system-ui, sans-serif; padding: 10px 14px; border: 0; border-radius: 999px; background: rgba(244,247,245,.92); color: var(--forest); box-shadow: 0 6px 18px rgba(8,28,21,.18); cursor: pointer; transition: background .25s ease; }
-  .map-fit:hover { background: #fff; }
-  .map-hint { position: absolute; z-index: 600; inset: 0; width: 100%; border: 0; display: grid; place-items: end center; padding-bottom: 18px; background: linear-gradient(180deg, rgba(8,28,21,0) 55%, rgba(8,28,21,.45)); color: #fff; font: 600 13px/1 "Plus Jakarta Sans", system-ui, sans-serif; cursor: pointer; }
-  .map-hint[hidden] { display: none; }
-  /* Leaflet con la estética del sitio */
-  .smap .leaflet-control-zoom { border: 0; box-shadow: 0 6px 18px rgba(8,28,21,.18); border-radius: 14px; overflow: hidden; }
-  .smap .leaflet-control-zoom a { width: 36px; height: 36px; line-height: 36px; color: var(--forest); background: rgba(244,247,245,.94); border-color: var(--line); }
-  .smap .leaflet-control-attribution { font-size: 10.5px; background: rgba(244,247,245,.8); color: var(--muted); }
-  .smap .leaflet-control-attribution a { color: var(--leaf); }
-  .smap .leaflet-popup-content-wrapper { border-radius: 16px; padding: 0; overflow: hidden; box-shadow: 0 18px 40px rgba(8,28,21,.28); }
-  .smap .leaflet-popup-content { margin: 0; width: 240px !important; font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
-  .smap .leaflet-popup-content img { width: 100%; height: 150px; object-fit: cover; object-position: center 62%; }
-  .smap .leaflet-popup-close-button { top: 6px !important; right: 6px !important; width: 26px !important; height: 26px !important; border-radius: 50%; background: rgba(8,28,21,.55) !important; color: #fff !important; font: 400 18px/26px system-ui, sans-serif !important; }
-  .pop { padding: 12px 16px 14px; }
-  .pop strong { display: block; font-family: var(--serif); font-weight: 500; font-size: 18px; line-height: 1.2; color: var(--forest); }
-  .pop span { display: block; margin-top: 4px; font-size: 13px; line-height: 1.45; color: var(--muted); }
-  .smap .leaflet-tooltip { font: 600 12px/1.2 "Plus Jakarta Sans", system-ui, sans-serif; color: var(--ink); background: rgba(244,247,245,.92); border: 0; border-radius: 999px; padding: 5px 10px; box-shadow: 0 4px 12px rgba(8,28,21,.2); }
-  .smap .leaflet-tooltip::before { display: none; }
-  .mk { display: grid; place-items: center; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,.35); }
-  .mk--punto { background: #fff; border: 3px solid #3a86c8; }
-  .mk--fauna { background: var(--moss); border: 3px solid #fff; }
-  .mk--entrada, .mk--inicio { background: var(--forest); border: 3px solid #fff; }
-  .mk--parking { background: #fff; border: 3px solid var(--forest); color: var(--forest); font: 800 11px/1 "Plus Jakarta Sans", sans-serif; }
-  .mk--origen { background: #fff; border: 3px solid var(--forest); }
-  .mk--nivel { background: rgba(8,28,21,.85); border: 2px solid var(--mint); color: var(--mint); font: 700 11px/1 "Plus Jakarta Sans", sans-serif; }
-
-  /* 03 · EDUCACIÓN (oculta) */
+  /* 03 · EDUCACIÓN */
   .s3 { background: linear-gradient(180deg, #e4f2e9 0%, var(--sand) 100%); z-index: 1; }
   .s3 .flower--leaf3 { width: 62vw; left: -16vw; top: 1vh; transform-origin: 0% 50%; opacity: .75; }
   .s3 .text { position: relative; z-index: 2; }
@@ -291,9 +251,6 @@
     .s3 .text { position: absolute; left: 52vw; top: 50%; transform: translateY(-46%); width: min(520px, 40vw); }
     .feats { grid-template-columns: 1fr 1fr; }
     .s3 .perch { left: 12vw; top: 36vh; width: 28vw; height: 36vh; }
-    .smap .text { position: absolute; left: 7vw; top: 50%; transform: translateY(-50%); width: min(400px, 27vw); }
-    .smap .map-wrap { position: absolute; left: 39vw; right: 4vw; top: 12vh; bottom: 10vh; height: auto; margin: 0; border-radius: 26px; }
-    .smap .perch { left: 25vw; width: 13vw; top: 68vh; height: 20vh; }
     /* Cierva: abre la sección 01, arriba a la izquierda, sobre el texto. */
     #doe { position: absolute; left: 2vw; top: 12vh; width: 96vw; height: 24vh; }
 
@@ -314,8 +271,6 @@
     .s1 .text { top: 29vh; }
     .links-list { display: none; }
     .s3 .text { top: 12vh; transform: none; }
-    .smap .legend { gap: 6px; margin-top: 16px; }
-    .smap .copy { margin-top: 12px; }
     .chips { display: none; }
     .s2 .copy { display: none; }
   }
@@ -346,7 +301,7 @@
 
 <nav class="nav" aria-label="Principal">
   <a class="logo" href="#inicio" aria-label="Cerro Varnet, inicio"><img src="assets/img/logo-varnet.webp" alt="Reserva natural privada Cerro Varnet" width="724" height="274"></a>
-  <div class="nav__links"><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#mapa">Mapa</a><a href="#godomar">Godomar</a></div>
+  <div class="nav__links"><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#educacion">Educación</a><a href="#godomar">Godomar</a></div>
   <a class="nav__cta" href="#llegar">Cómo llegar</a>
 </nav>
 
@@ -379,7 +334,7 @@
         <a class="btn" href="https://www.google.com/maps/dir/Universidad+Nacional+de+Salta,+Av.+Bolivia,+Salta/''/@-24.701595,-65.4184923,7049m/data=!3m2!1e3!4b1!4m13!4m12!1m5!1m1!1s0x941bc113ff725893:0x2981a8b51a8d1fbd!2m2!1d-65.4099398!2d-24.7276565!1m5!1m1!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!2m2!1d-65.3852814!2d-24.6756142" target="_blank" rel="noopener">Cómo llegar con GPS <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
         <a class="btn btn--ghost" href="https://www.google.com/maps/place/Cerro+Varnet+-+Reserva+Natural+Privada/@-24.6756093,-65.3878563,881m/data=!3m2!1e3!4b1!4m6!3m5!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!8m2!3d-24.6756142!4d-65.3852814!16s%2Fg%2F11smqz7kqz" target="_blank" rel="noopener">Ver en Google Maps</a>
       </div>
-      <p class="links-list reveal d4"><a href="#mapa">Ver el mapa de senderos →</a></p>
+      <p class="links-list reveal d4"><a href="https://www.google.com/maps/d/u/0/edit?mid=1hNGZmpvYtX6vHf-j8pjVS_Pa_UiPKZI&usp=sharing" target="_blank" rel="noopener">Abrir el mapa de senderos →</a></p>
     </div>
     <div class="perch" data-yaw="125" data-pitch="10" data-roll="6"></div>
   </section>
@@ -400,31 +355,7 @@
     </div>
   </section>
 
-  <section class="smap" id="mapa" data-theme="light">
-    <div class="text">
-      <div class="num reveal">03</div>
-      <span class="eyebrow reveal d1">Mapa de la reserva</span>
-      <h2 class="title reveal d1">Conocé el cerro <em>antes de pisarlo</em></h2>
-      <p class="copy reveal d2">Senderos, miradores, la cascada y las zonas donde viven corzuelas, pavas y liebres. Tocá cada punto del mapa para ver el detalle.</p>
-      <ul class="legend reveal d3">
-        <li><i class="lg lg--reserva"></i>Límite de la reserva</li>
-        <li><i class="lg lg--sendero"></i>Senderos señalizados</li>
-        <li><i class="lg lg--acceso"></i>Acceso desde la RN 9</li>
-        <li><i class="lg lg--nivel">2</i>Nivel de los senderos (1 a 4)</li>
-        <li><i class="lg lg--fauna"></i>Zonas de fauna y flora</li>
-      </ul>
-      <p class="links-list reveal d4"><a href="https://www.google.com/maps/d/u/0/edit?mid=1hNGZmpvYtX6vHf-j8pjVS_Pa_UiPKZI&usp=sharing" target="_blank" rel="noopener">Abrir en Google My Maps →</a></p>
-    </div>
-    <div class="perch" data-yaw="130" data-pitch="6" data-roll="4"></div>
-    <div class="map-wrap reveal d2">
-      <div id="map" role="region" aria-label="Mapa de senderos de la reserva Cerro Varnet"></div>
-      <button class="map-fit" type="button" hidden>Ver toda la reserva</button>
-      <button class="map-hint" type="button" hidden>Tocá para explorar el mapa</button>
-    </div>
-  </section>
-
-  <!-- Sección «Educar para conservar»: oculta a pedido; se vuelve a mostrar quitando «hidden». -->
-  <section class="s3" id="educacion" data-theme="light" hidden>
+  <section class="s3" id="educacion" data-theme="light">
     <img class="flower flower--leaf3" data-speed="-0.2" data-rot="-10" src="assets/img/lapacho-lateral.webp" alt="">
     <div class="perch" data-yaw="160" data-pitch="8" data-roll="4"></div>
     <div class="text">
@@ -469,7 +400,7 @@
     <div class="base reveal">
       <div class="brand"><img src="assets/img/logo-varnet.webp" alt="Reserva natural privada Cerro Varnet" width="724" height="274" loading="lazy"><p>Reserva natural privada orientada al turismo de naturaleza y contemplación.</p></div>
       <div class="cols">
-        <div><h4>Explorá</h4><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#mapa">Mapa</a><a href="#godomar">Godomar</a></div>
+        <div><h4>Explorá</h4><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#educacion">Educación</a><a href="#godomar">Godomar</a></div>
         <div><h4>Contacto</h4><span>Salta, Argentina</span><span>A 20 min del centro de Salta</span><a href="https://www.instagram.com/cerrovarnet.ok/" target="_blank" rel="noopener">@cerrovarnet.ok</a></div>
       </div>
     </div>
@@ -510,50 +441,29 @@
   let reduced = reducedQuery.matches;
 
   /* ---------- Efectos de scroll en el DOM ---------- */
-  const sections = [...document.querySelectorAll("main > section:not([hidden])")];
+  const sections = [...document.querySelectorAll("main > section")];
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in"); });
   }, { threshold: 0, rootMargin: "0px 0px -22% 0px" });
   sections.forEach((s) => io.observe(s));
 
-  /* Medidas de la página en coordenadas del documento. Se toman solo cuando cambia el diseño
-     (carga, fuentes, cambio de tamaño): durante el scroll no se vuelve a medir nada, así el
-     navegador no recalcula el diseño en cada cuadro y el colibrí no tironea. */
-  const perches = sections.map((s) => s.querySelector(".perch"));
-  const parallax = [...document.querySelectorAll("[data-speed]")].map((el) => ({
-    el, sec: sections.indexOf(el.closest("section")), speed: parseFloat(el.dataset.speed), rot: parseFloat(el.dataset.rot || 0) }));
-  const layout = { secs: [], stops: [] };
-  function measure() {
-    const sy = scrollY, mobile = innerWidth < 761;
-    layout.secs = sections.map((s) => { const r = s.getBoundingClientRect(); return { top: r.top + sy, h: r.height }; });
-    // Alto del colibrí con aleteo ≈ 1,28 × su tamaño; ancho ≈ 1,5 ×. En celular se deja más aire.
-    const fitH = mobile ? 1.6 : 1.28;
-    layout.stops = perches.map((p) => {
-      const r = p.getBoundingClientRect(), d = p.dataset;
-      return { x: r.left + r.width / 2, y: r.top + sy + r.height / 2, size: Math.min(r.height / fitH, r.width / 1.5),
-        yaw: +d.yaw || 0, pitch: +d.pitch || 0, roll: +d.roll || 0 };
-    });
-    onScroll();
-  }
+  const parallax = [...document.querySelectorAll("[data-speed]")];
   function onScroll() {
-    if (!layout.secs.length) return;
-    const sy = scrollY, H = innerHeight;
-    for (const p of parallax) {
-      if (reduced || p.sec < 0) { p.el.style.transform = ""; continue; }
-      const f = (sy - layout.secs[p.sec].top) / H;
-      p.el.style.transform = `translate3d(0, ${f * p.speed * H}px, 0) rotate(${f * p.rot}deg)`;
+    for (const el of parallax) {
+      if (reduced) { el.style.transform = ""; continue; }
+      const sec = el.closest("section");
+      const p = -sec.getBoundingClientRect().top / innerHeight;
+      const speed = parseFloat(el.dataset.speed);
+      const rot = parseFloat(el.dataset.rot || 0);
+      el.style.transform = `translate3d(0, ${p * speed * innerHeight}px, 0) rotate(${p * rot}deg)`;
     }
-    const y = sy + 40;
-    const cur = sections.find((s, i) => layout.secs[i].top <= y && layout.secs[i].top + layout.secs[i].h > y);
+    const y = 40;
+    const cur = sections.find((s) => { const r = s.getBoundingClientRect(); return r.top <= y && r.bottom > y; });
     document.body.classList.toggle("on-dark", cur?.dataset.theme === "dark");
-    document.body.classList.toggle("scrolled", sy > 30);
+    document.body.classList.toggle("scrolled", scrollY > 30);
   }
   addEventListener("scroll", onScroll, { passive: true });
-  addEventListener("resize", measure);
-  addEventListener("load", measure);
-  document.fonts?.ready.then(measure);
-  new ResizeObserver(measure).observe(document.querySelector("main"));
-  measure();
+  onScroll();
 
   /* ---------- Loader ---------- */
   const loader = document.getElementById("loader");
@@ -562,9 +472,8 @@
   setTimeout(reveal, 2500);
 
   /* ---------- Escena three.js ---------- */
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
-  // En celular, 1,5× alcanza para que se vea nítido y pinta casi la mitad de píxeles que 2×.
-  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 761 ? 1.5 : 2));
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NeutralToneMapping;
   renderer.toneMappingExposure = 1.0;
@@ -610,7 +519,6 @@
   }
   reducedQuery.addEventListener("change", (e) => { reduced = e.matches; applyMotionPreference(); });
   const draco = new DRACOLoader().setDecoderPath(DRACO_PATH);
-  draco.preload(); // baja el decodificador mientras se descarga el modelo, no después
   const modelFailed = (err) => { console.error(err); reveal(); };
   loadModel(MODEL_URL).then((buf) => new GLTFLoader().setDRACOLoader(draco).parse(buf, "", (gltf) => {
     const model = gltf.scene;
@@ -646,23 +554,32 @@
      pantalla, el colibrí se posa en su hueco (y se desplaza con él); en la última pantalla de
      scroll de la sección vuela hasta el hueco de la siguiente. Funciona con secciones de
      cualquier alto, en escritorio y en celular. */
+  const perches = sections.map((s) => s.querySelector(".perch"));
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const lerp = (a, b, t) => a + (b - a) * t;
   const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
   const lerpAngle = (a, b, t) => { const d = ((b - a + 540) % 360) - 180; return a + d * t; };
   const rad = THREE.MathUtils.degToRad;
 
-  // Destino del colibrí en coordenadas del documento (y = posición en la página, no en pantalla).
-  function targetAt(sy) {
-    const H = innerHeight, n = sections.length, S = layout.secs;
+  // Alto del colibrí con aleteo ≈ 1,28 × su tamaño; ancho ≈ 1,5 ×. En celular se deja más aire
+  // alrededor, porque el hueco queda pegado al texto de arriba y de abajo.
+  function stopOf(i) {
+    const p = perches[i], r = p.getBoundingClientRect(), d = p.dataset;
+    const fitH = innerWidth < 761 ? 1.6 : 1.28;
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, size: Math.min(r.height / fitH, r.width / 1.5),
+      yaw: +d.yaw || 0, pitch: +d.pitch || 0, roll: +d.roll || 0 };
+  }
+  function targetAt() {
+    const H = innerHeight, n = sections.length;
     let i = 0;
-    for (let j = 0; j < n; j++) if (S[j].top - sy <= 1) i = j;
+    for (let j = 0; j < n; j++) if (sections[j].getBoundingClientRect().top <= 1) i = j;
     let t = 0;
     if (i < n - 1) {
-      const f = clamp((sy - S[i].top - (S[i].h - H)) / H, 0, 1);
+      const r = sections[i].getBoundingClientRect();
+      const f = clamp((-r.top - (r.height - H)) / H, 0, 1);
       t = reduced ? Math.round(f) : ease(clamp((f - .12) / .76, 0, 1));
     }
-    const a = layout.stops[i], b = layout.stops[Math.min(i + 1, n - 1)];
+    const a = stopOf(i), b = stopOf(Math.min(i + 1, n - 1));
     const arc = Math.sin(t * Math.PI);
     return {
       x: lerp(a.x, b.x, t),
@@ -675,16 +592,14 @@
 
   /* ---------- Bucle de animación ---------- */
   const clock = new THREE.Clock();
-  const cur = { ...targetAt(scrollY) };
+  const cur = { ...targetAt() };
   const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
   addEventListener("pointermove", (e) => {
     mouse.x = (e.clientX / innerWidth) * 2 - 1;
     mouse.y = -((e.clientY / innerHeight) * 2 - 1);
   }, { passive: true });
 
-  // y llega en coordenadas del documento: restarle el scroll del momento lo deja pegado al contenido.
   function place(x, y, size, yaw, pitch, roll, halfH, halfW, ox = 0, oy = 0, oz = 0) {
-    y -= scrollY;
     flight.position.set((x / innerWidth * 2 - 1) * halfW + ox, -(y / innerHeight * 2 - 1) * halfH + oy, oz);
     flight.scale.setScalar(halfH * 2 * (size / innerHeight));
     flight.rotation.set(0, -rad(yaw), 0);
@@ -695,7 +610,7 @@
     requestAnimationFrame(tick);
     const dt = Math.min(clock.getDelta(), .05);
     const t = clock.elapsedTime;
-    const tg = targetAt(scrollY);
+    const tg = targetAt();
     const halfH = Math.tan(rad(camera.fov / 2)) * camera.position.z;
     const halfW = halfH * camera.aspect;
 
@@ -1004,120 +919,6 @@
     if (visible && !started) start().catch((err) => console.error(err));
     else if (visible && mixer) applyMotion();
   }, { rootMargin: "60% 0px" }).observe(section);
-</script>
-
-<script>
-/* ---------- Mapa de senderos (03) ----------
-   Datos exportados del Google My Maps de la reserva (assets/data/senderos.json) y dibujados con
-   Leaflet sobre imagen satelital. Leaflet se carga recién cuando la sección se acerca a la pantalla. */
-(() => {
-  const section = document.getElementById("mapa");
-  const el = document.getElementById("map");
-  const fitBtn = section.querySelector(".map-fit");
-  const hint = section.querySelector(".map-hint");
-  const LEAFLET = "https://unpkg.com/leaflet@1.9.4/dist/leaflet";
-  const touch = matchMedia("(hover: none), (pointer: coarse)").matches;
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-
-  function loadLeaflet() {
-    const css = document.createElement("link");
-    css.rel = "stylesheet"; css.href = LEAFLET + ".css";
-    document.head.appendChild(css);
-    return new Promise((ok, fail) => {
-      const js = document.createElement("script");
-      js.src = LEAFLET + ".js"; js.onload = ok; js.onerror = fail;
-      document.head.appendChild(js);
-    });
-  }
-
-  // Marcadores dibujados con CSS (clases .mk--*), con tamaño según la importancia del punto.
-  const SIZE = { entrada: 18, inicio: 16, parking: 20, origen: 14, punto: 16, fauna: 14, nivel: 20 };
-  const LABEL = new Set(["entrada", "inicio", "punto"]);
-
-  async function build() {
-    await loadLeaflet();
-    const data = await (await fetch("assets/data/senderos.json")).json();
-    const map = L.map(el, {
-      scrollWheelZoom: false,          // la rueda sigue bajando la página
-      dragging: !touch,                // en el celular se activa al tocar «explorar», así no frena el scroll
-      tap: false,
-      zoomSnap: .25,
-      attributionControl: true,
-      zoomControl: false,
-    });
-    L.control.zoom({ position: "bottomright" }).addTo(map);
-    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
-      maxZoom: 19, maxNativeZoom: 18,
-      attribution: 'Imágenes © <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a>, Maxar · Datos: Cerro Varnet',
-    }).addTo(map);
-    map.attributionControl.setPrefix(false);
-
-    const style = (k) => ({
-      reserva: { color: "#b7e4c7", weight: 2.5, dashArray: "8 6", fillColor: "#52b788", fillOpacity: .14 },
-      acceso:  { color: "#ffffff", weight: 3.5, dashArray: "2 9", lineCap: "round", opacity: .95 },
-      parking: { color: "#ffffff", weight: 2.5, opacity: .85 },
-      sendero: { color: "#e85d8f", weight: 4.5, lineCap: "round", lineJoin: "round" },
-    })[k];
-
-    const narrow = el.clientWidth < 600;
-    const fit = [];
-    // Primero las líneas (con un borde oscuro debajo para que se lean sobre el satélite), después los puntos.
-    for (const f of data.features) {
-      const p = f.properties, g = f.geometry;
-      if (g.type === "Point") continue;
-      const latlngs = g.type === "Polygon" ? g.coordinates[0].map(([x, y]) => [y, x]) : g.coordinates.map(([x, y]) => [y, x]);
-      if (g.type === "Polygon") {
-        L.polygon(latlngs, { ...style("reserva"), interactive: false }).addTo(map);
-        fit.push(...latlngs);
-        continue;
-      }
-      if (p.kind === "sendero" || p.kind === "acceso") L.polyline(latlngs, { color: "#081c15", weight: p.kind === "sendero" ? 8 : 6.5, opacity: .45, interactive: false }).addTo(map);
-      const line = L.polyline(latlngs, style(p.kind)).addTo(map);
-      if (p.name) line.bindTooltip(esc(p.name), { sticky: true });
-      if (p.kind === "acceso") fit.push(...latlngs);
-    }
-    for (const f of data.features) {
-      const p = f.properties, g = f.geometry;
-      if (g.type !== "Point") continue;
-      const s = SIZE[p.kind] || 14;
-      const inner = p.kind === "nivel" ? p.level : p.kind === "parking" ? "P" : "";
-      const icon = L.divIcon({ className: "", html: `<div class="mk mk--${p.kind}" style="width:${s}px;height:${s}px">${inner}</div>`, iconSize: [s, s], iconAnchor: [s / 2, s / 2] });
-      const m = L.marker([g.coordinates[1], g.coordinates[0]], { icon, title: p.name, keyboard: true, riseOnHover: true }).addTo(map);
-      const img = p.img ? `<img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">` : "";
-      m.bindPopup(`${img}<div class="pop"><strong>${esc(p.name)}</strong>${p.desc ? `<span>${esc(p.desc)}</span>` : ""}</div>`, { maxWidth: 240, minWidth: 240, autoPanPadding: [24, 24] });
-      // La entrada mira al río (oeste), donde sobra lugar: su etiqueta va a la izquierda para no pisar «Inicio de senderos».
-      // En pantallas angostas no hay lugar a la izquierda: va debajo.
-      const dir = p.kind !== "entrada" ? "right" : narrow ? "bottom" : "left";
-      const off = { right: [s / 2 + 4, 0], left: [-(s / 2 + 4), 0], bottom: [0, s / 2 + 2] }[dir];
-      // En el celular solo queda fija la etiqueta de la entrada; el resto se ve al tocar cada punto.
-      if (LABEL.has(p.kind) && (!narrow || p.kind === "entrada")) m.bindTooltip(esc(p.name), { permanent: true, direction: dir, offset: off });
-    }
-
-    const bounds = L.latLngBounds(fit);
-    // Margen extra a la derecha: las etiquetas de los puntos se escriben hacia ese lado.
-    const pad = { paddingTopLeft: narrow ? [12, 52] : [28, 64], paddingBottomRight: narrow ? [12, 12] : [170, 28] };
-    map.fitBounds(bounds, pad);
-    fitBtn.hidden = false;
-    fitBtn.addEventListener("click", () => reduced ? map.fitBounds(bounds, pad) : map.flyToBounds(bounds, { ...pad, duration: .8 }));
-    if (touch) {
-      // Bloqueado al llegar: el dedo baja la página. Al tocar, el mapa se puede mover; al salir de la sección se vuelve a bloquear.
-      const lock = (on) => { hint.hidden = !on; on ? map.dragging.disable() : map.dragging.enable(); };
-      lock(true);
-      hint.addEventListener("click", () => lock(false));
-      new IntersectionObserver(([e]) => { if (!e.isIntersecting) lock(true); }).observe(el);
-    }
-    // Si cambia el tamaño del recuadro (rotar el celular, achicar la ventana), el mapa se reacomoda.
-    new ResizeObserver(() => map.invalidateSize()).observe(el);
-  }
-
-  let started = false;
-  new IntersectionObserver(([e]) => {
-    if (!e.isIntersecting || started) return;
-    started = true;
-    build().catch((err) => { console.error(err); el.innerHTML = '<p class="pop"><span>No se pudo cargar el mapa. Abrilo en Google My Maps con el enlace de al lado.</span></p>'; });
-  }, { rootMargin: "80% 0px" }).observe(section);
-})();
 </script>
 </body>
 </html>
