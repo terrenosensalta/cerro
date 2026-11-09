@@ -31,7 +31,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="preload" href="assets/models/colibri.bin" as="fetch" type="application/octet-stream" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" href="assets/models/colibri.bin?v=4" as="fetch" type="application/octet-stream" crossorigin>
 <style>
   :root {
     --ink: #081c15; --forest: #1b4332; --leaf: #2d6a4f; --moss: #52b788; --mint: #b7e4c7;
@@ -444,7 +445,7 @@
   import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
   // Modelo integrado y cifrado (AES-256-GCM) por exigencia de su licencia: se descifra en memoria.
-  const MODEL_URL = "assets/models/colibri.bin";
+  const MODEL_URL = "assets/models/colibri.bin?v=4";
   const MODEL_KEY = "L0eUCGmduJX6cgjUEKFrEjFK3hvaqflGBjvDyC9QetU=";
   async function loadModel(url) {
     const data = await (await fetch(url)).arrayBuffer();
@@ -543,6 +544,7 @@
   }
   reducedQuery.addEventListener("change", (e) => { reduced = e.matches; applyMotionPreference(); });
   const draco = new DRACOLoader().setDecoderPath(DRACO_PATH);
+  draco.preload(); // el decodificador baja en paralelo con el modelo
   const modelFailed = (err) => { console.error(err); reveal(); };
   loadModel(MODEL_URL).then((buf) => new GLTFLoader().setDRACOLoader(draco).parse(buf, "", (gltf) => {
     const model = gltf.scene;
