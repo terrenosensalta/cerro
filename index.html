@@ -31,7 +31,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="preload" href="assets/img/colibri-inicio.webp" as="image" fetchpriority="high">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" crossorigin>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js" crossorigin>
@@ -83,11 +82,6 @@
   /* COLIBRÍ */
   #bee { position: fixed; inset: 0; z-index: 20; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
   #bee.ready { opacity: 1; }
-  /* Foto del colibrí que se ve al instante mientras baja el 3D; se funde cuando el 3D aparece. */
-  #bee-poster { position: absolute; z-index: 19; pointer-events: none; transition: opacity .8s ease .5s; animation: posterFloat 3.2s ease-in-out infinite; }
-  #bee-poster.out { opacity: 0; }
-  @keyframes posterFloat { 50% { transform: translateY(-7px) rotate(-1deg); } }
-  @media (prefers-reduced-motion: reduce) { #bee-poster { animation: none; } }
 
   /* TIPOGRAFÍA COMPARTIDA */
   .eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--leaf); }
@@ -323,7 +317,6 @@
 </nav>
 
 <canvas id="bee" aria-hidden="true"></canvas>
-<img id="bee-poster" src="assets/img/colibri-inicio.webp" alt="" aria-hidden="true" width="860" height="860" fetchpriority="high">
 
 <main>
   <section class="hero" id="inicio" data-theme="light">
@@ -340,24 +333,6 @@
       </div>
     </div>
   </section>
-  <script>
-    // Ubica la foto del colibrí en el mismo hueco donde se posa el 3D, y abre la página sin esperar al modelo.
-    (() => {
-      const img = document.getElementById("bee-poster"), perch = document.querySelector(".hero .perch");
-      const put = () => {
-        const r = perch.getBoundingClientRect(), size = Math.min(r.height / (innerWidth < 761 ? 1.6 : 1.28), r.width / 1.5), side = size * 1.8;
-        img.style.cssText = `left:${r.left + r.width / 2 - side / 2 + scrollX}px;top:${r.top + r.height / 2 - side / 2 + scrollY}px;width:${side}px;height:${side}px`;
-      };
-      put();
-      addEventListener("resize", put);
-      // Se espera la foto y, como mucho 0,6 s más, a las tipografías.
-      img.decode().catch(() => {}).then(() => Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 600))])).then(() => {
-        put();
-        document.getElementById("loader").classList.add("done");
-        document.body.classList.add("loaded");
-      });
-    })();
-  </script>
 
   <section class="s1" id="ubicacion" data-theme="light">
     <canvas id="doe" aria-hidden="true"></canvas>
@@ -596,9 +571,6 @@
     applyMotionPreference();
     loadedModel = true;
     canvas.classList.add("ready");
-    const poster = document.getElementById("bee-poster");
-    poster.classList.add("out");
-    setTimeout(() => poster.remove(), 1400);
     reveal();
   }, modelFailed)).catch(modelFailed);
 
