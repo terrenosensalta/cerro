@@ -1,650 +1,904 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cerro Varnet | Reserva Natural Privada - Salta</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'varnet-deep': '#081c15',
-                        'varnet-forest': '#1b4332',
-                        'varnet-leaf': '#2d6a4f',
-                        'varnet-moss': '#52b788',
-                        'varnet-mint': '#b7e4c7',
-                        'varnet-earth': '#4a3728',
-                        'varnet-sand': '#f4f7f5',
-                    },
-                    fontFamily: {
-                        'sans': ['Plus Jakarta Sans', 'sans-serif'],
-                        'serif': ['Fraunces', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        .glass-nav {
-            background: rgba(244, 247, 245, 0.95);
-            backdrop-filter: blur(12px);
-        }
-        .hero-pattern {
-            background-color: #f4f7f5;
-            background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
-            background-blend-mode: overlay;
-        }
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .godomar-float {
-            animation: float 4s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(1deg); }
-        }
-        .organic-border {
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-        }
-        .bg-gradient-forest {
-            background: linear-gradient(135deg, #1b4332 0%, #081c15 100%);
-        }
-        .logo-container img {
-            height: 48px;
-            width: auto;
-            object-fit: contain;
-        }
-        
-        /* Estilos de Galería Interactiva */
-        .gallery-item {
-            overflow: hidden;
-            position: relative;
-            cursor: zoom-in;
-            border-radius: 24px;
-        }
-        .gallery-item img {
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .gallery-item:hover img {
-            transform: scale(1.08);
-        }
-        .gallery-overlay {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        /* Lightbox (Pantalla Completa) */
-        #lightbox {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        #lightbox.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        
-        /* Mobile Menu Animation */
-        #mobile-menu {
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(100%);
-        }
-        #mobile-menu.open {
-            transform: translateX(0);
-        }
-    </style>
-</head>
-<body class="bg-varnet-sand font-sans text-varnet-deep overflow-x-hidden">
-
-    <!-- Navegación -->
-    <nav class="fixed top-0 w-full z-[100] glass-nav border-b border-varnet-forest/10 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <a href="#" class="logo-container block transform hover:scale-105 transition">
-                    <img src="assets/img/logocerro.png" alt="Logo Cerro Varnet">
-                </a>
-            </div>
-            
-            <!-- Desktop Menu -->
-            <div class="hidden lg:flex gap-8 text-xs font-bold uppercase tracking-[0.2em]">
-                <a href="#senderismo" class="text-varnet-forest hover:text-varnet-moss transition relative group py-2">
-                    Senderos
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-varnet-moss transition-all group-hover:w-full"></span>
-                </a>
-                <a href="#galeria" class="text-varnet-forest hover:text-varnet-moss transition relative group py-2">
-                    Galería
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-varnet-moss transition-all group-hover:w-full"></span>
-                </a>
-                <a href="#conservacion" class="text-varnet-forest hover:text-varnet-moss transition relative group py-2">
-                    Educación
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-varnet-moss transition-all group-hover:w-full"></span>
-                </a>
-                <a href="#godomar" class="text-varnet-forest hover:text-varnet-moss transition relative group py-2">
-                    Godomar
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-varnet-moss transition-all group-hover:w-full"></span>
-                </a>
-                 <a href="#cercania" class="text-varnet-forest hover:text-varnet-moss transition relative group py-2">
-                    Ubicación
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-varnet-moss transition-all group-hover:w-full"></span>
-                </a>
-            </div>
-
-            <div class="flex items-center gap-4">
-                <!--<button class="bg-varnet-forest text-varnet-mint px-6 py-2.5 rounded-full text-xs font-black tracking-widest hover:bg-varnet-leaf transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 hidden sm:block uppercase">
-                    <a href="https://www.google.com/maps/d/u/0/edit?mid=1hNGZmpvYtX6vHf-j8pjVS_Pa_UiPKZI&usp=sharing">Explorar reserva</a>--> 
-                </button>
-                <!-- Mobile Toggle -->
-                <button id="menu-toggle" class="lg:hidden text-varnet-forest text-2xl focus:outline-none p-2">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 z-[150] bg-varnet-deep lg:hidden p-8 flex flex-col justify-center items-center backdrop-blur-md bg-opacity-95">
-        <button id="menu-close" class="absolute top-6 right-6 text-varnet-mint text-4xl p-2 hover:rotate-90 transition duration-300">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div class="flex flex-col gap-8 text-center w-full max-w-sm">
-            <a href="#senderismo" class="mobile-link text-3xl font-serif text-varnet-sand hover:text-varnet-moss transition">Senderos</a>
-            <a href="#galeria" class="mobile-link text-3xl font-serif text-varnet-sand hover:text-varnet-moss transition">Galería</a>
-            <a href="#conservacion" class="mobile-link text-3xl font-serif text-varnet-sand hover:text-varnet-moss transition">Educación</a>
-            <a href="#godomar" class="mobile-link text-3xl font-serif text-varnet-sand hover:text-varnet-moss transition">Godomar</a>
-            <a href="#cercania" class="mobile-link text-3xl font-serif text-varnet-sand hover:text-varnet-moss transition">Ubicación</a>
-            <button class="mt-8 bg-varnet-moss text-varnet-deep px-8 py-4 rounded-full font-black uppercase tracking-widest hover:bg-white transition w-full">Reservar Ahora</button>
-        </div>
-    </div>
-
-    
-    <header class="relative min-h-screen flex items-center hero-pattern pt-20 overflow-hidden">
-        <!-- Decoraciones de fondo -->
-        <div class="absolute top-20 left-0 w-64 h-64 bg-varnet-moss/10 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-varnet-leaf/5 rounded-full blur-3xl"></div>
-
-        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
-            <div class="order-2 lg:order-1 reveal active">
-                <div class="inline-flex items-center gap-2 bg-white px-4 py-1.5 rounded-full shadow-sm border border-varnet-forest/10 mb-8">
-                    <span class="w-2 h-2 bg-varnet-moss rounded-full animate-pulse"></span>
-                    <span class="text-xs font-bold uppercase tracking-widest text-varnet-forest">A 15' de Salta Capital</span>
-                </div>
-                <h1 class="font-serif text-5xl md:text-8xl text-varnet-forest leading-[1] mb-8">
-                    Conectá con la <br><span class="italic text-varnet-leaf relative inline-block">
-                        naturaleza
-                        <svg class="absolute w-full h-3 -bottom-1 left-0 text-varnet-mint opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" /></svg>
-                    </span>
-                </h1>
-                <p class="text-lg text-varnet-earth/80 max-w-lg mb-10 leading-relaxed font-medium">
-                    Cerro Varnet es una reserva privada diseñada para el senderismo consciente. Un refugio de silencio y aire puro, tan cerca que podés venir todos los días.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#senderismo" class="bg-varnet-forest text-white px-8 py-4 rounded-full font-bold shadow-xl hover:bg-varnet-deep hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center gap-3 group">
-                        Ver Senderos
-                        <i class="fa-solid fa-arrow-right-long group-hover:translate-x-1 transition"></i>
-                    </a>
-                    <!--<a href="#godomar" class="bg-white text-varnet-forest px-8 py-4 rounded-full font-bold shadow-sm border border-varnet-forest/20 hover:bg-varnet-sand hover:border-varnet-moss transition flex items-center gap-3">
-                        <i class="fa-brands fa-whatsapp text-xl text-varnet-moss"></i>
-                        Guía Digital
-                    </a>-->
-                </div>
-            </div>
-            <div class="relative order-1 lg:order-2 flex justify-center perspective-1000">
-                <div class="relative z-10 organic-border w-72 h-72 md:w-[520px] md:h-[520px] overflow-hidden shadow-2xl border-[6px] border-white group cursor-pointer hover:rotate-1 transition duration-700">
-                    <img src="assets/img/vista.jpeg" alt="Senderismo en Cerro Varnet" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-varnet-forest/30 to-transparent"></div>
-                </div>
-                <div class="absolute -bottom-8 -right-8 w-64 h-64 bg-varnet-moss/20 organic-border -z-10 rotate-12 blur-lg"></div>
-            </div>
-        </div>
-    </header>
-
-    
-    <!-- Ubicación con Google My Maps -->
-    <section id="cercania" class="py-24 bg-gradient-forest text-white relative overflow-hidden">
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-            
-            <!-- Contenedor del Mapa -->
-            <div class="reveal relative h-[500px] w-full order-2 md:order-1">
-                <div class="absolute inset-0 bg-varnet-moss/10 blur-3xl rounded-full"></div>
-                
-                <div class="relative z-10 w-full h-full rounded-[40px] overflow-hidden shadow-2xl border-4 border-varnet-leaf/30 bg-varnet-deep">
-                    <!-- Mapa de Google My Maps (Visualización Únicamente) -->
-                    <!-- Nota: Reemplaza el 'mid' por el ID de tu propio My Maps si lo tienes -->
-                    
-                    <iframe 
-                        src="https://www.google.com/maps/d/u/0/embed?mid=1hNGZmpvYtX6vHf-j8pjVS_Pa_UiPKZI&ehbc=2E312F" 
-                        width="100%" 
-                        height="100%" 
-                        class="map-container absolute inset-0 w-full h-full border-0"
-                        style="top: -60px; height: calc(100% + 120px);"
-                        loading="lazy">
-                    </iframe>
-                    
-                    <!-- Overlay de protección para evitar scroll accidental en móviles -->
-                    <div class="absolute inset-0 bg-transparent pointer-events-none md:pointer-events-auto"></div>
-                </div>
-
-                <!-- Etiqueta Flotante -->
-                <div class="absolute -bottom-6 -right-6 bg-varnet-moss text-varnet-deep p-6 rounded-3xl z-20 font-bold shadow-xl border-4 border-varnet-deep hidden sm:block">
-                    <p class="text-3xl font-serif">15 Min</p>
-                    <p class="text-xs uppercase opacity-80 tracking-widest">del centro de Salta</p>
-                </div>
-            </div>
-
-            <!-- Texto Descriptivo -->
-            <div class="reveal order-1 md:order-2">
-                <span class="text-varnet-moss font-bold tracking-widest ext-xs uppercase mb-4 block italic">Ubicación Estratégica</span>
-                <h2 class="font-serif text-4xl md:text-6xl mb-8 leading-tight">Tu dosis de naturaleza pura, <br><span class="text-varnet-mint">sin salir de la ciudad</span></h2>
-                <p class="text-varnet-mint/80 mb-10 text-lg leading-relaxed font-light">
-                    Explora nuestros senderos digitalizados. El mapa interactivo te permite conocer los puntos clave, ingresos y recorridos antes de pisar el cerro. El acceso es privado, seguro y extremadamente cercano.
-                </p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="flex items-center gap-4 bg-white/10 p-4 rounded-2xl border border-white/10 backdrop-blur-sm">
-                        <i class="fa-solid fa-location-dot text-varnet-moss text-xl"></i>
-                        <div>
-                            <span class="block font-bold text-sm">Ubicación Exacta</span>
-                            <a href="https://www.google.com/maps/place/Cerro+Varnet+-+Reserva+Natural+Privada/@-24.6756093,-65.3878563,881m/data=!3m2!1e3!4b1!4m6!3m5!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!8m2!3d-24.6756142!4d-65.3852814!16s%2Fg%2F11smqz7kqz?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"><span class="text-xs text-white/60">Ver en Google Maps</span></a>
-                        </div>
-                    </div>
-                    
-                    
-                </div>
-                <div class="mt-10 center">
-                    <a href="https://www.google.com/maps/dir/Universidad+Nacional+de+Salta,+Av.+Bolivia,+Salta/''/@-24.701595,-65.4184923,7049m/data=!3m2!1e3!4b1!4m13!4m12!1m5!1m1!1s0x941bc113ff725893:0x2981a8b51a8d1fbd!2m2!1d-65.4099398!2d-24.7276565!1m5!1m1!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!2m2!1d-65.3852814!2d-24.6756142?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-varnet-mint font-bold uppercase tracking-widest text-xs border-b border-varnet-mint pb-2 hover:text-white hover:border-white transition">Cómo llegar con GPS <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- 4. Godomar Section (El Guía) -->
-
-    <section id="godomar" class="py-24 bg-white overflow-hidden relative border-t border-varnet-forest/5">
-        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-            <div class="flex justify-center order-2 md:order-1 reveal">
-                <div class="relative godomar-float text-center">
-                    <div class="w-72 h-72 md:w-96 md:h-96 bg-varnet-forest rounded-[40%] flex flex-col items-center justify-center text-center p-10 shadow-2xl rotate-3 relative z-10 overflow-hidden">
-                    <img src="assets/img/godomar.png" alt="godomar">
-                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                                        </div>
-                    <!-- Chat Bubble Decor -->
-                </div>
-            </div>
-            <div class="order-1 md:order-2 reveal">
-                <span class="text-varnet-moss font-bold tracking-widest text-xs uppercase mb-3 block">Asistente Virtual</span>
-                <h2 class="font-serif text-4xl md:text-5xl mb-6 text-varnet-forest leading-tight">Tu Guía y Guardián <br>en el Bolsillo</h2>
-                <p class="text-varnet-earth font-medium mb-8 leading-relaxed">
-                    Godomar es nuestro asistente virtual con alma de montaña. A través de WhatsApp, se convierte en tu compañero de senderismo. Te informa sobre el estado de los senderos, el clima y te recuerda las normas para cuidar la reserva.
-                </p>
-<!--                <a href="#" class="inline-flex items-center gap-4 bg-varnet-forest text-varnet-mint px-10 py-5 rounded-full font-bold hover:bg-varnet-leaf transition-all transform hover:-translate-y-1 shadow-xl hover:shadow-2xl group">
-                    <i class="fa-brands fa-whatsapp text-3xl group-hover:scale-110 transition"></i>
-                    <div>
-                        <span class="block text-xs opacity-70 uppercase tracking-wider font-normal text-left">Click para chatear</span>
-                        <span class="block text-lg">Hablar con Godomar</span>
-                    </div>
-                </a>-->
-            </div>
-        </div>
-    </section>
-
-    
-    <!-- 1. Senderismo Section (El Producto) -->
-    <section id="senderismo" class="py-28 bg-white relative">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-20 reveal">
-                <span class="text-varnet-moss font-bold tracking-widest text-xs uppercase mb-3 block">Nuestras Rutas</span>
-                <h2 class="font-serif text-4xl md:text-5xl mb-6 text-varnet-forest">Senderos para cada paso</h2>
-                <div class="w-16 h-1 bg-varnet-moss mx-auto rounded-full"></div>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="reveal bg-varnet-sand p-8 rounded-[32px] border border-transparent hover:border-varnet-moss/30 hover:bg-white hover:shadow-xl transition-all duration-300 group">
-                    <div class="w-14 h-14 bg-varnet-forest text-varnet-mint rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition duration-300 shadow-md">
-                        <i class="fa-solid fa-leaf"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-varnet-forest font-serif">Trekking Consciente</h3>
-                    <div class="flex items-center gap-2 mb-4 text-xs font-bold text-varnet-moss uppercase tracking-wider">
-                        <i class="fa-solid fa-circle text-[8px]"></i> Dificultad Baja
-                    </div>
-                    <p class="text-gray-600 mb-6 leading-relaxed text-sm">Caminatas guiadas por el silencio, enfocadas en la observación de la biodiversidad local y la respiración.</p>
-                </div>
-                
-                <!-- Card 2 -->
-                <div class="reveal bg-varnet-sand p-8 rounded-[32px] border border-transparent hover:border-varnet-moss/30 hover:bg-white hover:shadow-xl transition-all duration-300 group delay-100">
-                    <div class="w-14 h-14 bg-varnet-forest text-varnet-mint rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition duration-300 shadow-md">
-                        <i class="fa-solid fa-compass"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-varnet-forest font-serif">Exploración Serrana</h3>
-                    <div class="flex items-center gap-2 mb-4 text-xs font-bold text-yellow-600 uppercase tracking-wider">
-                        <i class="fa-solid fa-circle text-[8px]"></i> Dificultad Media
-                    </div>
-                    <p class="text-gray-600 mb-6 leading-relaxed text-sm">Senderos que serpentean el cerro ofreciendo vistas panorámicas de la ciudad de Salta y el valle.</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="reveal bg-varnet-sand p-8 rounded-[32px] border border-transparent hover:border-varnet-moss/30 hover:bg-white hover:shadow-xl transition-all duration-300 group delay-200">
-                    <div class="w-14 h-14 bg-varnet-forest text-varnet-mint rounded-2xl flex items-center justify-center text-2xl mb-8 group-hover:scale-110 transition duration-300 shadow-md">
-                        <i class="fa-solid fa-person-running"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-varnet-forest font-serif">Desafío Varnet</h3>
-                    <div class="flex items-center gap-2 mb-4 text-xs font-bold text-red-500 uppercase tracking-wider">
-                        <i class="fa-solid fa-circle text-[8px]"></i> Dificultad Alta
-                    </div>
-                    <p class="text-gray-600 mb-6 leading-relaxed text-sm">Rutas con desnivel positivo diseñadas para quienes buscan un entrenamiento físico intenso en la montaña.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-    <!-- 3. Educación Section (Los Valores) -->
-    <section id="conservacion" class="py-24 bg-varnet-sand overflow-hidden">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col lg:flex-row gap-16 items-center mb-20">
-                <div class="lg:w-1/2 reveal">
-                    <span class="text-varnet-moss font-bold tracking-widest text-xs uppercase mb-4 block">Nuestro Compromiso</span>
-                    <h2 class="font-serif text-4xl md:text-5xl mb-8 text-varnet-forest leading-tight">Educar para <span class="italic text-varnet-leaf">conservar</span></h2>
-                    <p class="text-varnet-earth text-lg mb-8 leading-relaxed font-medium">
-                        Cerro Varnet no es solo un destino, es un aula viva. Creemos que la única forma de proteger nuestra selva de montaña es conociéndola profundamente. A través de nuestros programas, transformamos cada caminata en una oportunidad de aprendizaje.
-                    </p>
-                    <div class="space-y-6">
-                        <div class="flex gap-5 items-start bg-white p-4 rounded-2xl shadow-sm border border-varnet-forest/5">
-                            <div class="w-10 h-10 rounded-full bg-varnet-mint/30 flex-shrink-0 flex items-center justify-center text-varnet-forest">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-varnet-forest mb-1 font-serif">Talleres de Campo</h4>
-                                <p class="text-sm text-varnet-leaf opacity-80">Sesiones prácticas sobre flora nativa y técnicas de "No deje rastro".</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-5 items-start bg-white p-4 rounded-2xl shadow-sm border border-varnet-forest/5">
-                            <div class="w-10 h-10 rounded-full bg-varnet-mint/30 flex-shrink-0 flex items-center justify-center text-varnet-forest">
-                                <i class="fa-solid fa-seedling"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-varnet-forest mb-1 font-serif">Vivero de Nativas</h4>
-                                <p class="text-sm text-varnet-leaf opacity-80">Producción propia de especies locales para la restauración del cerro.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="lg:w-1/2 relative reveal">
-                    <div class="grid grid-cols-2 gap-4">
-                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Conservación" class="rounded-[32px] shadow-xl aspect-square object-cover transform translate-y-8">
-                        <img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Educación Ambiental" class="rounded-[32px] shadow-xl aspect-square object-cover">
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Icon Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 reveal">
-                <div class="text-center group">
-                    <div class="w-16 h-16 bg-white mx-auto rounded-full flex items-center justify-center text-varnet-moss shadow-md mb-4 group-hover:bg-varnet-forest group-hover:text-white transition duration-300">
-                         <i class="fa-solid fa-droplet text-2xl"></i>
-                    </div>
-                    <h5 class="font-bold text-varnet-forest">Ojos de agua</h5>
-                </div>
-                <div class="text-center group">
-                    <div class="w-16 h-16 bg-white mx-auto rounded-full flex items-center justify-center text-varnet-moss shadow-md mb-4 group-hover:bg-varnet-forest group-hover:text-white transition duration-300">
-                         <i class="fa-solid fa-bug text-2xl"></i>
-                    </div>
-                    <h5 class="font-bold text-varnet-forest">Microfauna</h5>
-                </div>
-                <div class="text-center group">
-                    <div class="w-16 h-16 bg-white mx-auto rounded-full flex items-center justify-center text-varnet-moss shadow-md mb-4 group-hover:bg-varnet-forest group-hover:text-white transition duration-300">
-                         <i class="fa-solid fa-mountain-sun text-2xl"></i>
-                    </div>
-                    <h5 class="font-bold text-varnet-forest">Vistas panorámicas</h5>
-                </div>
-                <div class="text-center group">
-                    <div class="w-16 h-16 bg-white mx-auto rounded-full flex items-center justify-center text-varnet-moss shadow-md mb-4 group-hover:bg-varnet-forest group-hover:text-white transition duration-300">
-                         <i class="fa-solid fa-recycle text-2xl"></i>
-                    </div>
-                    <h5 class="font-bold text-varnet-forest">Eco reciclaje</h5>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-
-
-
-
-
-
-
-    <!-- 2. Galería Section (La Prueba Visual) - Mejorada con Lightbox 
-    <section id="galeria" class="py-24 bg-varnet-deep text-varnet-sand overflow-hidden">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal">
-                <div class="max-w-xl">
-                    <span class="text-varnet-moss font-bold tracking-widest text-xs uppercase mb-3 block">Galería</span>
-                    <h2 class="font-serif text-4xl md:text-5xl mb-6 text-white">Varnet en imágenes</h2>
-                    <p class="text-varnet-mint/80 font-medium leading-relaxed">Haz clic en las imágenes para sumergirte en la experiencia visual de nuestra reserva.</p>
-                </div>
-                <div class="mt-8 md:mt-0">
-                    <button class="text-varnet-mint font-bold text-xs uppercase tracking-widest border-b border-varnet-mint pb-1 hover:text-white hover:border-white transition">Ver todo en Instagram</button>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-4 h-[600px] md:h-[700px] reveal">
-                <div class="gallery-item col-span-2 row-span-2 group" onclick="openLightbox(this.querySelector('img').src)">
-                    <img src="/assets/img/hero-image.webp" alt="Corzuelas de la reserva">
-                    <div class="gallery-overlay absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <i class="fa-solid fa-expand text-white text-3xl drop-shadow-lg transform scale-0 group-hover:scale-100 transition duration-300"></i>
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black/80 to-transparent w-full">
-                        <p class="text-xs font-bold uppercase tracking-widest text-varnet-moss">Cumbre</p>
-                        <p class="text-white font-serif text-xl">Vistas Panorámicas</p>
-                    </div>
-                </div>
-                
-                <div class="gallery-item group" onclick="openLightbox(this.querySelector('img').src)">
-                    <img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90" alt="Flora Nativa">
-                    <div class="gallery-overlay absolute inset-0 bg-black/30 flex items-center justify-center">
-                        <i class="fa-solid fa-expand text-white text-2xl drop-shadow-lg transform scale-0 group-hover:scale-100 transition duration-300"></i>
-                    </div>
-                </div>
-                
-                <div class="gallery-item group" onclick="openLightbox(this.querySelector('img').src)">
-                    <img src="https://images.unsplash.com/photo-1596333522248-1014621813d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90" alt="Senderismo Grupal">
-                    <div class="gallery-overlay absolute inset-0 bg-black/30 flex items-center justify-center">
-                        <i class="fa-solid fa-expand text-white text-2xl drop-shadow-lg transform scale-0 group-hover:scale-100 transition duration-300"></i>
-                    </div>
-                </div>
-                
-                <div class="gallery-item col-span-2 group" onclick="openLightbox(this.querySelector('img').src)">
-                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90" alt="Bosque de Yungas">
-                    <div class="gallery-overlay absolute inset-0 bg-black/30 flex items-center justify-center">
-                        <i class="fa-solid fa-expand text-white text-3xl drop-shadow-lg transform scale-0 group-hover:scale-100 transition duration-300"></i>
-                    </div>
-                    <div class="absolute bottom-4 left-6">
-                         <p class="text-xs font-bold uppercase tracking-widest text-white/90">Bosque de Yungas</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!doctype html>
+<!--
+  Hummingbird — autor: huykhoi2407. Fuente: https://www.cgtrader.com/free-3d-models/animal/bird/hummingbird-e3e7819f-eba9-41df-b776-a09217bd7623.
+  Licencia: Royalty Free License (no AI) (https://www.cgtrader.com/pages/terms-and-conditions).
+  El modelo se distribuye integrado y cifrado en esta web; no se ofrece como archivo descargable.
+  Detalle en LICENCIA-COLIBRI.txt.
 -->
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cerro Varnet | Reserva Natural Privada en Salta</title>
+<meta name="description" content="Reserva natural privada a 15 minutos del centro de Salta. Senderos para cada paso, educación ambiental y naturaleza pura sin salir de la ciudad.">
+<meta property="og:title" content="Cerro Varnet — Reserva Natural Privada">
+<meta property="og:description" content="Conectá con la naturaleza a 15 minutos de Salta Capital.">
+<meta property="og:image" content="assets/img/varnet-vista.webp">
+<meta name="theme-color" content="#1b4332">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/models/colibri.bin" as="fetch" type="application/octet-stream" crossorigin>
+<style>
+  :root {
+    --ink: #081c15; --forest: #1b4332; --leaf: #2d6a4f; --moss: #52b788; --mint: #b7e4c7;
+    --earth: #4a3728; --sand: #f4f7f5; --muted: #4b5f55; --line: rgba(8,28,21,.12);
+    --pad: clamp(20px, 3.2vw, 46px);
+    --serif: "Fraunces", Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: var(--ink); background: var(--sand); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  :focus-visible { outline: 2px solid var(--moss); outline-offset: 3px; border-radius: 6px; }
 
-    <!-- Footer -->
-    <footer class="bg-varnet-sand border-t border-varnet-forest/10 pt-20 pb-10">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-4 gap-12 mb-16">
-                <div class="md:col-span-2">
-                    <div class="mb-6 w-48">
-                        <img src="assets/img/logocerro.png" alt="Logo Cerro Varnet" class="w-full h-auto brightness-90 grayscale-[0.2]" onerror="this.src='https://placehold.co/180x60/1b4332/b7e4c7?text=Cerro+Varnet'">
-                    </div>  
-                    <p class="text-varnet-earth/70 text-sm max-w-sm mb-8 leading-relaxed font-medium">
-                        Reserva natural privada orientada al turismo de naturaleza y contemplación. El refugio de paz a minutos de Salta.
-                    </p>
-<!--                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-varnet-forest hover:bg-varnet-forest hover:text-white transition shadow-sm border border-varnet-forest/5"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-varnet-forest hover:bg-varnet-forest hover:text-white transition shadow-sm border border-varnet-forest/5"><i class="fa-brands fa-facebook-f"></i></a>
-                    </div>-->
-                </div>
-                <div>
-                    <h5 class="font-bold text-sm uppercase tracking-widest mb-8 text-varnet-forest">Mapa del Sitio</h5>
-                    <ul class="text-sm text-varnet-leaf space-y-4 font-bold">
-                        <li><a href="#senderismo" class="hover:text-varnet-moss transition">Senderos</a></li>
-                        <li><a href="#galeria" class="hover:text-varnet-moss transition">Galería</a></li>
-                        <li><a href="#conservacion" class="hover:text-varnet-moss transition">Educación</a></li>
-                        <li><a href="#godomar" class="hover:text-varnet-moss transition">Godomar</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="font-bold text-sm uppercase tracking-widest mb-8 text-varnet-forest">Contacto</h5>
-                    <ul class="text-sm text-varnet-leaf space-y-4 font-bold">
-                        <li>Salta, Argentina</li>
-                       <li>A 15 min del centro</li>
-                 <!--   <li class="font-bold text-varnet-forest underline underline-offset-4 cursor-pointer">@cerrovarnet.ok</li>
-            --></ul>
-                </div>
-            </div>
-            <div class="text-center pt-8 border-t border-varnet-forest/5 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-[10px] text-varnet-leaf font-bold uppercase tracking-[0.2em] opacity-60">&copy; 2026 Reserva Cerro Varnet</p>
-                <div class="text-[10px] text-varnet-leaf font-bold uppercase tracking-[0.1em] opacity-60 flex gap-4">
-                    
-                    
-                </div>
-            </div>
-        </div>
-    </footer>
+  /* NAV */
+  .nav { position: fixed; z-index: 30; top: 0; left: 0; right: 0; display: flex; align-items: center; gap: clamp(24px, 4vw, 56px); padding: 16px var(--pad) 0; pointer-events: none; transition: color .5s ease; }
+  .nav > * { pointer-events: auto; position: relative; }
+  /* Al bajar, el menú gana un fondo translúcido para que el contenido no se lea por debajo. */
+  .nav::before { content: ""; position: absolute; inset: 0 0 -12px; background: rgba(244,247,245,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 var(--line); opacity: 0; transition: opacity .4s ease, background .5s ease; }
+  body.scrolled .nav { pointer-events: auto; }
+  body.scrolled .nav::before { opacity: 1; }
+  body.on-dark .nav::before { background: rgba(8,28,21,.6); box-shadow: 0 1px 0 rgba(183,228,199,.12); }
+  .logo img { height: 46px; width: auto; transition: filter .5s ease; }
+  .nav__links { display: flex; gap: clamp(20px, 3vw, 42px); font-size: 14.5px; font-weight: 500; }
+  .nav__links a { position: relative; }
+  .nav__links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .35s ease; }
+  .nav__links a:hover::after { transform: scaleX(1); }
+  .nav__cta { margin-left: auto; font-size: 13.5px; font-weight: 600; letter-spacing: .04em; padding: 11px 20px; border-radius: 999px; background: var(--forest); color: var(--sand); transition: background .3s ease, color .3s ease, transform .3s ease; }
+  .nav__cta:hover { background: var(--leaf); transform: translateY(-1px); }
+  body.on-dark .nav { color: #fff; }
+  body.on-dark .logo img { filter: invert(1) brightness(1.6); }
+  body.on-dark .nav__cta { background: var(--mint); color: var(--ink); }
 
-    <!-- Botón WhatsApp Flotante 
-    <a href="#godomar" class="fixed bottom-6 right-6 z-[90] group flex items-center gap-4">
-        <div class="bg-varnet-forest text-varnet-mint px-5 py-3 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-all shadow-xl translate-x-4 group-hover:translate-x-0 hidden md:block">
-            Godomar te guía
-        </div>
-        <div class="w-14 h-14 md:w-16 md:h-16 bg-varnet-moss text-varnet-deep rounded-full shadow-[0_4px_20px_rgba(82,183,136,0.5)] flex items-center justify-center text-3xl hover:scale-110 transition active:scale-95 animate-bounce">
-            <i class="fa-brands fa-whatsapp"></i>
-        </div>
-    </a>-->
+  /* INSTAGRAM (fijo) */
+  .badge { position: fixed; z-index: 30; right: var(--pad); bottom: 20px; display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--forest); padding: 8px 14px 8px 10px; border-radius: 999px; background: rgba(244,247,245,.78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 24px rgba(8,28,21,.08); transition: color .5s, background .5s; }
+  .badge svg { width: 18px; height: 18px; }
+  body.on-dark .badge { color: var(--mint); background: rgba(8,28,21,.45); }
 
-    <!-- Lightbox Modal -->
-    <div id="lightbox" class="fixed inset-0 z-[200] bg-black/95 flex justify-center items-center p-4">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/50 hover:text-white text-4xl transition z-[210]">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <img id="lightbox-img" src="" alt="Full Screen" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-transform duration-300">
-        <p class="absolute bottom-6 text-white/60 text-sm font-sans tracking-widest uppercase">Haz clic fuera de la imagen para cerrar</p>
+  /* COLIBRÍ */
+  #bee { position: fixed; inset: 0; z-index: 20; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
+  #bee.ready { opacity: 1; }
+
+  /* TIPOGRAFÍA COMPARTIDA */
+  .eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--leaf); }
+  .num { font-family: var(--serif); font-style: italic; font-weight: 300; line-height: .9; letter-spacing: -.03em; font-size: clamp(64px, 7vw, 120px); color: var(--mint); }
+  .title { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 3.6vw, 58px); line-height: 1.06; letter-spacing: -.02em; margin-top: 12px; }
+  .title em { font-style: italic; color: var(--leaf); }
+  .copy { margin-top: 18px; font-size: clamp(14.5px, 1.08vw, 16.5px); line-height: 1.65; color: var(--muted); max-width: 460px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; padding: 13px 22px; border-radius: 999px; background: var(--forest); color: var(--sand); border: 1.5px solid var(--forest); transition: background .3s ease, color .3s ease, transform .3s ease, border-color .3s ease; }
+  .btn svg { width: 14px; height: 14px; transition: transform .3s ease; }
+  .btn:hover { background: var(--leaf); border-color: var(--leaf); transform: translateY(-1px); }
+  .btn:hover svg { transform: translateX(3px); }
+  .btn--ghost { background: transparent; color: var(--forest); }
+  .btn--ghost:hover { background: var(--forest); color: var(--sand); border-color: var(--forest); }
+  .dark .eyebrow { color: var(--moss); }
+  .dark .num { color: rgba(183,228,199,.4); }
+  .dark .title em { color: var(--mint); }
+  .dark .copy { color: rgba(233,246,239,.8); }
+  .dark .btn { background: var(--mint); border-color: var(--mint); color: var(--ink); }
+  .dark .btn:hover { background: #fff; border-color: #fff; }
+  .dark .btn--ghost { background: transparent; color: var(--mint); }
+  .dark .btn--ghost:hover { background: var(--mint); color: var(--ink); }
+
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 1s ease, transform 1.1s cubic-bezier(.2,.8,.15,1); }
+  .in .reveal { opacity: 1; transform: none; }
+  .in .reveal.d1 { transition-delay: .1s; }
+  .in .reveal.d2 { transition-delay: .2s; }
+  .in .reveal.d3 { transition-delay: .3s; }
+  .in .reveal.d4 { transition-delay: .4s; }
+
+  /* SECCIONES — base (celular): contenido en columna; cada sección deja un hueco (.perch) para el colibrí. */
+  section { position: relative; overflow: hidden; min-height: 100svh; padding: 104px 22px 72px; }
+  .flower { position: absolute; pointer-events: none; user-select: none; will-change: transform; }
+  .perch { position: relative; width: 100%; height: 26vh; pointer-events: none; }
+
+  /* HERO */
+  .hero { text-align: center; z-index: 3; background:
+      radial-gradient(ellipse 70% 55% at 72% 18%, rgba(255,255,255,.9) 0%, rgba(255,255,255,0) 70%),
+      linear-gradient(180deg, #eaf5ee 0%, #d6eddf 55%, #bfe5cc 100%); }
+  .hero .eyebrow { margin-top: 2vh; opacity: 0; }
+  .loaded .hero .eyebrow { animation: fade .9s .1s ease forwards; }
+  .hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(46px, 6.6vw, 116px); line-height: 1; letter-spacing: -.03em; margin-top: 14px; will-change: transform; position: relative; z-index: 2; }
+  .hero h1 em { font-style: italic; color: var(--leaf); }
+  .hero h1 .line { display: block; overflow: hidden; padding-bottom: .08em; }
+  .hero h1 .line > span { display: inline-block; transform: translateY(110%); }
+  .loaded .hero h1 .line > span { animation: rise 1.1s cubic-bezier(.2,.8,.15,1) forwards; }
+  .hero h1 .line:nth-child(2) > span { animation-delay: .12s; }
+  @keyframes rise { to { transform: translateY(0); } }
+  .hero .perch { height: 32vh; }
+  .hero__side { position: relative; z-index: 2; max-width: 340px; margin: 0 auto; opacity: 0; }
+  .loaded .hero__side { animation: fade 1s .7s ease forwards; }
+  .hero__side p { font-size: clamp(15px, 1.2vw, 17.5px); line-height: 1.55; color: var(--muted); }
+  .hero__side .btns { justify-content: center; }
+  .stat { display: flex; align-items: baseline; justify-content: center; gap: 10px; margin-bottom: 16px; }
+  .stat strong { font-family: var(--serif); font-weight: 400; font-size: 40px; line-height: 1; color: var(--forest); letter-spacing: -.02em; }
+  .stat span { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--leaf); }
+  @keyframes fade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .hero .flower--leaf { width: min(42vw, 190px); left: -40px; bottom: -6vh; transform-origin: 10% 90%; filter: drop-shadow(0 24px 30px rgba(16,70,40,.16)); z-index: 1; opacity: .7; }
+
+  /* 01 · UBICACIÓN */
+  .s1 { background: linear-gradient(180deg, #bfe5cc 0%, #e4f2e9 26%, var(--sand) 100%); z-index: 2; }
+  .photo { position: relative; border-radius: 26px; overflow: hidden; height: 54vh; box-shadow: 0 30px 60px rgba(8,28,21,.18); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .photo figcaption { position: absolute; left: 14px; bottom: 14px; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 999px; background: rgba(244,247,245,.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: var(--forest); }
+  .links-list { margin-top: 18px; font-size: 13.5px; font-weight: 600; }
+  .links-list a { color: var(--leaf); border-bottom: 1.5px solid rgba(45,106,79,.3); transition: border-color .3s; }
+  .links-list a:hover { border-color: var(--leaf); }
+
+  /* 02 · SENDEROS (oscura) */
+  .s2 { color: #fff; z-index: 3; background: var(--forest); }
+  .s2 .bg { position: absolute; inset: 0; background: url(assets/img/varnet-montanas.webp) center 30%/cover no-repeat; transform: scale(1.04); }
+  .s2::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(8,28,21,.82) 0%, rgba(8,28,21,.55) 45%, rgba(8,28,21,.9) 100%); }
+  .s2 .head, .s2 .cards { position: relative; z-index: 2; }
+  .cards { display: grid; gap: 14px; }
+  .card { padding: 22px 22px 24px; border-radius: 22px; background: rgba(244,247,245,.08); border: 1px solid rgba(183,228,199,.18); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: background .35s ease, transform .35s ease, border-color .35s ease; }
+  .card:hover { background: rgba(244,247,245,.13); border-color: rgba(183,228,199,.4); transform: translateY(-3px); }
+  .card h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(22px, 1.8vw, 28px); letter-spacing: -.01em; margin-top: 12px; }
+  .card p { margin-top: 8px; font-size: 14px; line-height: 1.6; color: rgba(233,246,239,.78); }
+  .level { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mint); }
+  .level i { display: flex; gap: 3px; }
+  .level i b { width: 14px; height: 4px; border-radius: 2px; background: rgba(183,228,199,.25); }
+  .level i b.on { background: var(--moss); }
+
+  /* 03 · EDUCACIÓN */
+  .s3 { background: linear-gradient(180deg, #e4f2e9 0%, var(--sand) 100%); z-index: 1; }
+  .s3 .flower--leaf3 { width: 62vw; left: -16vw; top: 1vh; transform-origin: 0% 50%; opacity: .75; }
+  .s3 .text { position: relative; z-index: 2; }
+  .feats { display: grid; gap: 12px; margin-top: 22px; }
+  .feat { padding: 16px 18px; border-radius: 18px; background: #fff; border: 1px solid var(--line); }
+  .feat strong { display: block; font-size: 14.5px; font-weight: 700; color: var(--forest); }
+  .feat span { display: block; margin-top: 4px; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chips li { list-style: none; font-size: 12.5px; font-weight: 600; padding: 7px 13px; border-radius: 999px; background: rgba(82,183,136,.14); color: var(--forest); }
+  /* CIERVA */
+  #doe { position: relative; display: block; width: 100%; height: 30vh; pointer-events: none; opacity: 0; transition: opacity 1.2s ease;
+    /* bordes difuminados: la cierva aparece y se va de a poco */
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
+  #doe.ready { opacity: 1; }
+
+  /* 04 · GODOMAR (oscura) */
+  .s4 { color: #fff; z-index: 2; background: radial-gradient(ellipse 60% 70% at 78% 62%, #2d6a4f 0%, #1b4332 48%, #0d2a1f 100%); }
+  .s4 .godomar { position: relative; z-index: 1; height: 62vh; width: auto; margin: 0 auto; filter: drop-shadow(0 30px 40px rgba(0,0,0,.35)); }
+  .s4 .text { position: relative; z-index: 2; }
+  .ticks { margin-top: 20px; display: grid; gap: 10px; }
+  .ticks li { list-style: none; display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: rgba(233,246,239,.88); }
+  .ticks li::before { content: ""; width: 22px; height: 22px; flex: none; border-radius: 50%; background: rgba(82,183,136,.22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23b7e4c7' stroke-width='1.8'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-5'/%3E%3C/svg%3E") center/12px no-repeat; }
+
+  /* 05 · CÓMO LLEGAR + PIE */
+  .route { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 26px auto 0; padding: 0; }
+  .route li { list-style: none; display: flex; flex-direction: column; gap: 2px; min-width: 150px; padding: 12px 18px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.55); }
+  .route strong { font-family: "Fraunces", serif; font-size: 20px; font-weight: 500; color: var(--forest); }
+  .route span { font-size: 13px; color: var(--muted); }
+  .foot { background: linear-gradient(180deg, var(--sand) 0%, #e4f2e9 100%); z-index: 1; display: flex; flex-direction: column; }
+  .foot .flower--fern { width: 56vw; right: -12vw; top: -2vh; transform-origin: 100% 0%; opacity: .6; }
+  .foot .cta { position: relative; z-index: 2; text-align: center; }
+  .foot .cta .title { max-width: 760px; margin-left: auto; margin-right: auto; }
+  .foot .cta .copy { margin-left: auto; margin-right: auto; }
+  .foot .cta .btns { justify-content: center; }
+  .foot .base { position: relative; z-index: 2; display: grid; gap: 28px; margin-top: auto; padding-top: 28px; border-top: 1px solid var(--line); }
+  .brand img { height: 46px; width: auto; }
+  .brand p { margin-top: 10px; font-size: 13.5px; line-height: 1.6; color: var(--muted); max-width: 340px; }
+  .cols { display: flex; gap: 48px; font-size: 14px; }
+  .cols h4 { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--leaf); margin-bottom: 10px; }
+  .cols a, .cols span { display: block; line-height: 1.95; color: var(--ink); }
+  .cols a:hover { color: var(--leaf); }
+  .credits { position: relative; z-index: 2; margin-top: 18px; font-size: 11.5px; line-height: 1.55; color: var(--muted); }
+  .credits a { text-decoration: underline; text-underline-offset: 2px; }
+  .credits a:hover { color: var(--leaf); }
+
+  /* LOADER */
+  .loader { position: fixed; inset: 0; z-index: 50; background: var(--sand); display: grid; place-items: center; transition: opacity .8s ease, visibility .8s; }
+  .loader.done { opacity: 0; visibility: hidden; }
+  .loader img { width: 190px; height: auto; animation: breathe 1.8s ease-in-out infinite; }
+  @keyframes breathe { 50% { opacity: .45; } }
+
+  /* CELULAR: el menú se reduce al logo y al botón de cómo llegar */
+  @media (max-width: 760px) {
+    .nav__links { display: none; }
+    .nav__cta { padding: 10px 16px; font-size: 12.5px; }
+    .logo img { height: 32px; }
+    .s2 .perch, .s4 .perch { height: 22vh; }
+    /* Sección 01: el colibrí vuela arriba a la izquierda, junto a la cierva, antes del texto. */
+    .s1 .perch { position: absolute; left: 2%; top: 80px; width: 46%; height: 15vh; }
+    .s1 #doe { margin: 11vh -22px 0; width: calc(100% + 44px); height: 22vh; }
+    .s4 .godomar { height: 54vh; }
+  }
+
+  /* ESCRITORIO: cada sección ocupa la pantalla y el contenido se ubica en capas */
+  @media (min-width: 761px) {
+    section { height: 100vh; min-height: 640px; padding: 0; }
+    .perch { position: absolute; }
+
+    .hero { text-align: center; }
+    .hero .eyebrow { position: absolute; left: 0; right: 0; top: 13vh; margin: 0; }
+    .hero h1 { position: absolute; left: 0; right: 0; top: calc(13vh + 26px); margin: 0; }
+    .hero .perch { left: 30vw; width: 40vw; top: calc(13vh + 26px + 13.6vw + 3vh); bottom: 2vh; height: auto; }
+    .hero__side { position: absolute; right: clamp(24px, 6vw, 110px); top: 58vh; width: min(300px, 26vw); margin: 0; text-align: left; }
+    .hero__side .btns, .stat { justify-content: flex-start; }
+    .hero .flower--leaf { width: clamp(360px, 38vw, 700px); left: -3vw; bottom: -5vh; opacity: 1; }
+
+    .s1 .text { position: absolute; left: 7vw; top: 33vh; width: min(500px, 38vw); }
+    .s1 .photo { position: absolute; right: 7vw; top: 12vh; width: min(31vw, 460px); height: 76vh; }
+    .s1 .perch { left: 45vw; top: 48vh; width: 20vw; height: 30vh; }
+
+    .s2 .head { position: absolute; left: 7vw; top: 13vh; width: min(560px, 46vw); }
+    .s2 .cards { position: absolute; left: 7vw; right: 7vw; bottom: 8vh; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .s2 .perch { right: 9vw; top: 11vh; width: 28vw; height: 36vh; }
+
+    .s3 .flower--leaf3 { width: clamp(320px, 33vw, 600px); left: -3vw; top: 9vh; opacity: 1; }
+    .s3 .text { position: absolute; left: 52vw; top: 12vh; width: min(520px, 40vw); }
+    .feats { grid-template-columns: 1fr 1fr; }
+    .s3 .perch { left: 12vw; top: 30vh; width: 28vw; height: 36vh; }
+    /* Cierva: abre la sección 01, arriba a la izquierda, sobre el texto. */
+    #doe { position: absolute; left: 2vw; top: 9vh; width: 56vw; height: 24vh; }
+
+    .s4 .text { position: absolute; left: 7vw; top: 20vh; width: min(480px, 40vw); }
+    .s4 .godomar { position: absolute; right: 8vw; bottom: 0; height: 84vh; margin: 0; }
+    .s4 .perch { right: 1.5vw; top: 26vh; width: 17vw; height: 24vh; }
+
+    .foot { display: block; }
+    .foot .flower--fern { width: clamp(280px, 25vw, 480px); right: -2vw; top: -3vh; opacity: 1; }
+    .foot .cta { position: absolute; left: 50%; top: 12vh; width: min(820px, 80vw); transform: translateX(-50%); }
+    .foot .perch { left: 54vw; width: 22vw; top: 58vh; height: 18vh; }
+    .foot .base { position: absolute; left: var(--pad); right: var(--pad); bottom: 52px; grid-template-columns: 1fr auto; align-items: end; padding-right: 150px; }
+    .foot .credits { position: absolute; left: var(--pad); bottom: 16px; max-width: min(760px, 70vw); margin: 0; }
+  }
+  /* Pantallas bajas de escritorio: se compacta lo que puede pisar a la cierva y al pie. */
+  @media (min-width: 761px) and (max-height: 780px) {
+    #doe { height: 19vh; }
+    .s1 .text { top: 29vh; }
+    .links-list { display: none; }
+    .s3 .text { top: 12vh; }
+    .chips { display: none; }
+    .s2 .copy { display: none; }
+  }
+
+  /* MOVIMIENTO REDUCIDO: misma composición, sin desplazamientos; solo fundidos suaves. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero h1 .line > span, .loaded .hero h1 .line > span { transform: none; animation: none; }
+    .hero__side, .hero .eyebrow { animation: none; transition: opacity .6s ease; }
+    .loaded .hero__side, .loaded .hero .eyebrow { opacity: 1; animation: none; }
+    .reveal { transform: none; transition: opacity .6s ease; }
+    .in .reveal.d1, .in .reveal.d2, .in .reveal.d3, .in .reveal.d4 { transition-delay: 0s; }
+    .btn, .card, .nav__cta, .nav__links a::after { transition: none; }
+    .btn:hover, .card:hover, .nav__cta:hover { transform: none; }
+    .loader img { animation: none; }
+  }
+</style>
+<script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  } }
+</script>
+</head>
+<body>
+
+<div class="loader" id="loader"><img src="assets/img/logo-varnet.webp" alt="Cerro Varnet" width="724" height="274"></div>
+
+<nav class="nav" aria-label="Principal">
+  <a class="logo" href="#inicio" aria-label="Cerro Varnet, inicio"><img src="assets/img/logo-varnet.webp" alt="Reserva natural privada Cerro Varnet" width="724" height="274"></a>
+  <div class="nav__links"><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#educacion">Educación</a><a href="#godomar">Godomar</a></div>
+  <a class="nav__cta" href="#llegar">Cómo llegar</a>
+</nav>
+
+<canvas id="bee" aria-hidden="true"></canvas>
+
+<main>
+  <section class="hero" id="inicio" data-theme="light">
+    <span class="eyebrow">A 15' de Salta Capital</span>
+    <h1 data-speed="0.5"><span class="line"><span>Conectá con</span></span><span class="line"><span>la <em>naturaleza</em></span></span></h1>
+    <div class="perch" data-yaw="150" data-pitch="6" data-roll="-4"></div>
+    <img class="flower flower--leaf" data-speed="-0.25" data-rot="8" src="assets/img/lapacho-hero.webp" alt="">
+    <div class="hero__side">
+      <div class="stat"><strong>15 min</strong><span>del centro de Salta</span></div>
+      <p>Una reserva privada pensada para el senderismo consciente. Un refugio de silencio y aire puro, tan cerca que podés venir todos los días.</p>
+      <div class="btns">
+        <a class="btn" href="#senderos">Ver senderos <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+        <a class="btn btn--ghost" href="#llegar">Cómo llegar</a>
+      </div>
     </div>
+  </section>
 
-    <script>
-        // Animaciones de Scroll (Reveal)
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 120;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
-            }
+  <section class="s1" id="ubicacion" data-theme="light">
+    <canvas id="doe" aria-hidden="true"></canvas>
+    <div class="text">
+      <div class="num reveal">01</div>
+      <span class="eyebrow reveal d1">Ubicación estratégica</span>
+      <h2 class="title reveal d1">Tu dosis de naturaleza pura, <em>sin salir de la ciudad</em></h2>
+      <p class="copy reveal d2">Explorá nuestros senderos digitalizados: el mapa interactivo te muestra los puntos clave, ingresos y recorridos antes de pisar el cerro. El acceso es privado, seguro y muy cercano.</p>
+      <div class="btns reveal d3">
+        <a class="btn" href="https://www.google.com/maps/dir/Universidad+Nacional+de+Salta,+Av.+Bolivia,+Salta/''/@-24.701595,-65.4184923,7049m/data=!3m2!1e3!4b1!4m13!4m12!1m5!1m1!1s0x941bc113ff725893:0x2981a8b51a8d1fbd!2m2!1d-65.4099398!2d-24.7276565!1m5!1m1!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!2m2!1d-65.3852814!2d-24.6756142" target="_blank" rel="noopener">Cómo llegar con GPS <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+        <a class="btn btn--ghost" href="https://www.google.com/maps/place/Cerro+Varnet+-+Reserva+Natural+Privada/@-24.6756093,-65.3878563,881m/data=!3m2!1e3!4b1!4m6!3m5!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!8m2!3d-24.6756142!4d-65.3852814!16s%2Fg%2F11smqz7kqz" target="_blank" rel="noopener">Ver en Google Maps</a>
+      </div>
+      <p class="links-list reveal d4"><a href="https://www.google.com/maps/d/u/0/edit?mid=1hNGZmpvYtX6vHf-j8pjVS_Pa_UiPKZI&usp=sharing" target="_blank" rel="noopener">Abrir el mapa de senderos →</a></p>
+    </div>
+    <div class="perch" data-yaw="125" data-pitch="10" data-roll="6"></div>
+    <figure class="photo reveal d2"><img src="assets/img/varnet-vista.webp" alt="Vista desde el Cerro Varnet hacia el valle y el río" width="825" height="1100" loading="lazy"><figcaption>Vista desde el cerro</figcaption></figure>
+  </section>
+
+  <section class="s2 dark" id="senderos" data-theme="dark">
+    <div class="bg" data-speed="0.18"></div>
+    <div class="head">
+      <div class="num reveal">02</div>
+      <span class="eyebrow reveal d1">Nuestras rutas</span>
+      <h2 class="title reveal d1">Senderos para <em>cada paso</em></h2>
+      <p class="copy reveal d2">Desde una caminata tranquila hasta un entrenamiento de montaña: elegí el ritmo que va con vos.</p>
+    </div>
+    <div class="perch" data-yaw="40" data-pitch="-6" data-roll="-8"></div>
+    <div class="cards">
+      <article class="card reveal d1"><span class="level"><i><b class="on"></b><b></b><b></b></i>Dificultad baja</span><h3>Trekking Consciente</h3><p>Caminatas guiadas por el silencio, enfocadas en observar la biodiversidad local y en la respiración.</p></article>
+      <article class="card reveal d2"><span class="level"><i><b class="on"></b><b class="on"></b><b></b></i>Dificultad media</span><h3>Exploración Serrana</h3><p>Senderos que serpentean el cerro con vistas panorámicas de la ciudad de Salta y el valle.</p></article>
+      <article class="card reveal d3"><span class="level"><i><b class="on"></b><b class="on"></b><b class="on"></b></i>Dificultad alta</span><h3>Desafío Varnet</h3><p>Rutas con desnivel positivo para quienes buscan un entrenamiento físico intenso en la montaña.</p></article>
+    </div>
+  </section>
+
+  <section class="s3" id="educacion" data-theme="light">
+    <img class="flower flower--leaf3" data-speed="-0.2" data-rot="-10" src="assets/img/lapacho-lateral.webp" alt="">
+    <div class="perch" data-yaw="160" data-pitch="8" data-roll="4"></div>
+    <div class="text">
+      <div class="num reveal">03</div>
+      <span class="eyebrow reveal d1">Nuestro compromiso</span>
+      <h2 class="title reveal d1">Educar para <em>conservar</em></h2>
+      <p class="copy reveal d2">Cerro Varnet no es solo un destino: es un aula viva. La única forma de proteger nuestra selva de montaña es conociéndola, por eso cada caminata es una oportunidad de aprender.</p>
+      <div class="feats reveal d3">
+        <div class="feat"><strong>Talleres de campo</strong><span>Prácticas sobre flora nativa y técnicas de «No dejar rastro».</span></div>
+        <div class="feat"><strong>Vivero de nativas</strong><span>Producción propia de especies locales para restaurar el cerro.</span></div>
+      </div>
+      <ul class="chips reveal d4"><li>Ojos de agua</li><li>Microfauna</li><li>Vistas panorámicas</li><li>Eco reciclaje</li></ul>
+    </div>
+  </section>
+
+  <section class="s4 dark" id="godomar" data-theme="dark">
+    <div class="text">
+      <div class="num reveal">04</div>
+      <span class="eyebrow reveal d1">Asistente virtual</span>
+      <h2 class="title reveal d1">Tu guía y guardián <em>en el bolsillo</em></h2>
+      <p class="copy reveal d2">Godomar es nuestro asistente virtual con alma de montaña. Por WhatsApp se convierte en tu compañero de senderismo.</p>
+      <ul class="ticks reveal d3"><li>Estado de los senderos</li><li>Clima del día en el cerro</li><li>Normas para cuidar la reserva</li></ul>
+      <div class="btns reveal d4"><a class="btn" href="https://ig.me/m/cerrovarnet.ok" target="_blank" rel="noopener">Hablar con Godomar <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a></div>
+    </div>
+    <div class="perch" data-yaw="200" data-pitch="4" data-roll="2"></div>
+    <img class="godomar reveal d2" src="assets/img/godomar.webp" alt="Godomar, el guía de la reserva, con su bastón, su mochila y un gato montés en el hombro" width="900" height="1245" loading="lazy">
+  </section>
+
+  <section class="foot" id="llegar" data-theme="light">
+    <img class="flower flower--fern" data-speed="0.3" data-rot="-6" src="assets/img/lapacho-colgante.webp" alt="">
+    <div class="cta">
+      <span class="eyebrow reveal">Cómo llegar</span>
+      <h2 class="title reveal d1">El refugio de paz <em>a minutos de Salta</em></h2>
+      <p class="copy reveal d2">Estamos a solo 15 minutos del centro de Salta. Abrí la ruta en tu celular y el GPS te lleva hasta la entrada de la reserva.</p>
+      <ul class="route reveal d2"><li><strong>15 min</strong><span>desde el centro de Salta</span></li><li><strong>Salida</strong><span>UNSa, Av. Bolivia</span></li><li><strong>GPS</strong><span>-24.6756, -65.3853</span></li></ul>
+      <div class="btns reveal d3">
+        <a class="btn" href="https://www.google.com/maps/dir/Universidad+Nacional+de+Salta,+Av.+Bolivia,+Salta/''/@-24.701595,-65.4184923,7049m/data=!3m2!1e3!4b1!4m13!4m12!1m5!1m1!1s0x941bc113ff725893:0x2981a8b51a8d1fbd!2m2!1d-65.4099398!2d-24.7276565!1m5!1m1!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!2m2!1d-65.3852814!2d-24.6756142" target="_blank" rel="noopener">Abrir la ruta con GPS <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+        <a class="btn btn--ghost" href="https://www.google.com/maps/place/Cerro+Varnet+-+Reserva+Natural+Privada/@-24.6756093,-65.3878563,881m/data=!3m2!1e3!4b1!4m6!3m5!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!8m2!3d-24.6756142!4d-65.3852814!16s%2Fg%2F11smqz7kqz" target="_blank" rel="noopener">Ver en Google Maps</a>
+      </div>
+    </div>
+    <div class="perch" data-yaw="105" data-pitch="4" data-roll="0"></div>
+    <div class="base reveal">
+      <div class="brand"><img src="assets/img/logo-varnet.webp" alt="Reserva natural privada Cerro Varnet" width="724" height="274" loading="lazy"><p>Reserva natural privada orientada al turismo de naturaleza y contemplación.</p></div>
+      <div class="cols">
+        <div><h4>Explorá</h4><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#educacion">Educación</a><a href="#godomar">Godomar</a></div>
+        <div><h4>Contacto</h4><span>Salta, Argentina</span><span>A 15 min del centro</span><a href="https://www.instagram.com/cerrovarnet.ok/" target="_blank" rel="noopener">@cerrovarnet.ok</a></div>
+      </div>
+    </div>
+    <p class="credits">© 2026 Reserva Cerro Varnet. Cierva 3D: <a href="https://sketchfab.com/3d-models/realistic-animated-doe-3d-model-b6172618aa304473a4cf7b9246c0a218" target="_blank" rel="noopener">«Realistic Animated Doe 3D Model»</a> de <a href="https://sketchfab.com/WildMesh_3D" target="_blank" rel="noopener">WildMesh 3D</a>, licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>, adaptada (animaciones recortadas, materiales y texturas optimizados).</p>
+  </section>
+</main>
+
+<a class="badge" href="https://www.instagram.com/cerrovarnet.ok/" target="_blank" rel="noopener" aria-label="Instagram de Cerro Varnet">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></svg>
+  @cerrovarnet.ok
+</a>
+
+<script type="module">
+  import * as THREE from "three";
+  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+  import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+  import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+  // Modelo integrado y cifrado (AES-256-GCM) por exigencia de su licencia: se descifra en memoria.
+  const MODEL_URL = "assets/models/colibri.bin";
+  const MODEL_KEY = "L0eUCGmduJX6cgjUEKFrEjFK3hvaqflGBjvDyC9QetU=";
+  async function loadModel(url) {
+    const data = await (await fetch(url)).arrayBuffer();
+    const raw = Uint8Array.from(atob(MODEL_KEY), (ch) => ch.charCodeAt(0));
+    const k = await crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]);
+    return crypto.subtle.decrypt({ name: "AES-GCM", iv: new Uint8Array(data, 0, 12) }, k, new Uint8Array(data, 12));
+  }
+  // Colibrí de CGTrader: cabeza en +X y tamaño normalizado.
+  const MODEL = {
+    rotation: [0, Math.PI / 2, 0],
+    sizeBoost: 1.4,
+    // Aleteo: tramo 36–96 (30 fps) que enlaza sin salto; sin las pistas que desplazan el cuerpo entero.
+    clip: { start: 36, end: 96, fps: 30, drop: /^(Bone|Armature)\.(position|quaternion|scale)$/ },
+  };
+  const DRACO_PATH = "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/";
+
+  const reducedQuery = matchMedia("(prefers-reduced-motion: reduce)");
+  let reduced = reducedQuery.matches;
+
+  /* ---------- Efectos de scroll en el DOM ---------- */
+  const sections = [...document.querySelectorAll("main > section")];
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in"); });
+  }, { threshold: 0, rootMargin: "0px 0px -22% 0px" });
+  sections.forEach((s) => io.observe(s));
+
+  const parallax = [...document.querySelectorAll("[data-speed]")];
+  function onScroll() {
+    for (const el of parallax) {
+      if (reduced) { el.style.transform = ""; continue; }
+      const sec = el.closest("section");
+      const p = -sec.getBoundingClientRect().top / innerHeight;
+      const speed = parseFloat(el.dataset.speed);
+      const rot = parseFloat(el.dataset.rot || 0);
+      el.style.transform = `translate3d(0, ${p * speed * innerHeight}px, 0) rotate(${p * rot}deg)`;
+    }
+    const y = 40;
+    const cur = sections.find((s) => { const r = s.getBoundingClientRect(); return r.top <= y && r.bottom > y; });
+    document.body.classList.toggle("on-dark", cur?.dataset.theme === "dark");
+    document.body.classList.toggle("scrolled", scrollY > 30);
+  }
+  addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Loader ---------- */
+  const loader = document.getElementById("loader");
+  const canvas = document.getElementById("bee");
+  function reveal() { loader.classList.add("done"); document.body.classList.add("loaded"); }
+  setTimeout(reveal, 2500);
+
+  /* ---------- Escena three.js ---------- */
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  renderer.toneMappingExposure = 1.0;
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+
+  const camera = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, .1, 100);
+  camera.position.set(0, 0, 10);
+  function resize() {
+    renderer.setSize(innerWidth, innerHeight, false);
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+  }
+  addEventListener("resize", resize);
+  resize();
+
+  // Luz del bosque: cielo claro arriba, rebote verde de la vegetación abajo.
+  scene.add(new THREE.HemisphereLight(0xf1fbf4, 0x2d6a4f, 1.3));
+  const key = new THREE.DirectionalLight(0xfff1d6, 2.6);
+  key.position.set(3, 5, 6);
+  const rim = new THREE.DirectionalLight(0xd2f0dc, 2.2);
+  rim.position.set(-5, 2, -4);
+  scene.add(key, rim);
+
+  // flight (posición, escala, rumbo) > beeRoot (alabeo/cabeceo) > holder (modelo).
+  const flight = new THREE.Group();
+  const beeRoot = new THREE.Group();
+  const holder = new THREE.Group();
+  beeRoot.add(holder);
+  flight.add(beeRoot);
+  scene.add(flight);
+
+  /* ---------- Carga del modelo ---------- */
+  let mixer = null, action = null, loadedModel = false;
+  function applyMotionPreference() {
+    if (action) {
+      action.paused = reduced;
+      if (reduced) { action.time = 0; mixer.update(0); }
+    }
+    onScroll();
+  }
+  reducedQuery.addEventListener("change", (e) => { reduced = e.matches; applyMotionPreference(); });
+  const draco = new DRACOLoader().setDecoderPath(DRACO_PATH);
+  const modelFailed = (err) => { console.error(err); reveal(); };
+  loadModel(MODEL_URL).then((buf) => new GLTFLoader().setDRACOLoader(draco).parse(buf, "", (gltf) => {
+    const model = gltf.scene;
+    model.traverse((o) => {
+      if (!o.isMesh) return;
+      o.frustumCulled = false;
+      for (const m of [].concat(o.material)) m.envMapIntensity = .7;
+    });
+    holder.add(model);
+    model.rotation.set(...MODEL.rotation);
+    const bodyBox = () => { holder.updateMatrixWorld(true); return new THREE.Box3().setFromObject(model); };
+    let box = bodyBox();
+    const size = box.getSize(new THREE.Vector3());
+    model.scale.setScalar(MODEL.sizeBoost / Math.max(size.x, size.y, size.z));
+    box = bodyBox();
+    model.position.sub(box.getCenter(new THREE.Vector3()));
+
+    if (MODEL.clip && gltf.animations.length) {
+      const c = MODEL.clip;
+      const clip = THREE.AnimationUtils.subclip(gltf.animations[0], "Aleteo", c.start, c.end, c.fps);
+      clip.tracks = clip.tracks.filter((t) => !c.drop.test(t.name));
+      mixer = new THREE.AnimationMixer(model);
+      action = mixer.clipAction(clip).play();
+    }
+    applyMotionPreference();
+    loadedModel = true;
+    canvas.classList.add("ready");
+    reveal();
+  }, modelFailed)).catch(modelFailed);
+
+  /* ---------- Trayectoria: el colibrí vuela al hueco (.perch) de cada sección ----------
+     Cada sección reserva un hueco libre de texto para el colibrí. Mientras la sección está en
+     pantalla, el colibrí se posa en su hueco (y se desplaza con él); en la última pantalla de
+     scroll de la sección vuela hasta el hueco de la siguiente. Funciona con secciones de
+     cualquier alto, en escritorio y en celular. */
+  const perches = sections.map((s) => s.querySelector(".perch"));
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const lerpAngle = (a, b, t) => { const d = ((b - a + 540) % 360) - 180; return a + d * t; };
+  const rad = THREE.MathUtils.degToRad;
+
+  // Alto del colibrí con aleteo ≈ 1,28 × su tamaño; ancho ≈ 1,5 ×. En celular se deja más aire
+  // alrededor, porque el hueco queda pegado al texto de arriba y de abajo.
+  function stopOf(i) {
+    const p = perches[i], r = p.getBoundingClientRect(), d = p.dataset;
+    const fitH = innerWidth < 761 ? 1.6 : 1.28;
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, size: Math.min(r.height / fitH, r.width / 1.5),
+      yaw: +d.yaw || 0, pitch: +d.pitch || 0, roll: +d.roll || 0 };
+  }
+  function targetAt() {
+    const H = innerHeight, n = sections.length;
+    let i = 0;
+    for (let j = 0; j < n; j++) if (sections[j].getBoundingClientRect().top <= 1) i = j;
+    let t = 0;
+    if (i < n - 1) {
+      const r = sections[i].getBoundingClientRect();
+      const f = clamp((-r.top - (r.height - H)) / H, 0, 1);
+      t = reduced ? Math.round(f) : ease(clamp((f - .12) / .76, 0, 1));
+    }
+    const a = stopOf(i), b = stopOf(Math.min(i + 1, n - 1));
+    const arc = Math.sin(t * Math.PI);
+    return {
+      x: lerp(a.x, b.x, t),
+      y: lerp(a.y, b.y, t) + arc * H * .11,
+      size: lerp(a.size, b.size, t) * (1 + arc * .12),
+      yaw: lerpAngle(a.yaw, b.yaw, t), pitch: lerp(a.pitch, b.pitch, t), roll: lerp(a.roll, b.roll, t),
+      moving: arc,
+    };
+  }
+
+  /* ---------- Bucle de animación ---------- */
+  const clock = new THREE.Clock();
+  const cur = { ...targetAt() };
+  const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+  addEventListener("pointermove", (e) => {
+    mouse.x = (e.clientX / innerWidth) * 2 - 1;
+    mouse.y = -((e.clientY / innerHeight) * 2 - 1);
+  }, { passive: true });
+
+  function place(x, y, size, yaw, pitch, roll, halfH, halfW, ox = 0, oy = 0, oz = 0) {
+    flight.position.set((x / innerWidth * 2 - 1) * halfW + ox, -(y / innerHeight * 2 - 1) * halfH + oy, oz);
+    flight.scale.setScalar(halfH * 2 * (size / innerHeight));
+    flight.rotation.set(0, -rad(yaw), 0);
+    beeRoot.rotation.set(rad(roll), 0, rad(pitch), "YZX");
+  }
+
+  function tick() {
+    requestAnimationFrame(tick);
+    const dt = Math.min(clock.getDelta(), .05);
+    const t = clock.elapsedTime;
+    const tg = targetAt();
+    const halfH = Math.tan(rad(camera.fov / 2)) * camera.position.z;
+    const halfW = halfH * camera.aspect;
+
+    if (reduced) {
+      Object.assign(cur, tg);
+      place(cur.x, cur.y, cur.size, cur.yaw, cur.pitch, cur.roll, halfH, halfW);
+      if (loadedModel) renderer.render(scene, camera);
+      return;
+    }
+
+    const prevX = cur.x, prevY = cur.y;
+    const k = 1 - Math.exp(-dt * 4);
+    cur.x = lerp(cur.x, tg.x, k);
+    cur.y = lerp(cur.y, tg.y, k);
+    cur.size = lerp(cur.size, tg.size, k);
+    cur.pitch = lerp(cur.pitch, tg.pitch, k);
+    cur.roll = lerp(cur.roll, tg.roll, k);
+    cur.yaw = lerpAngle(cur.yaw, tg.yaw, 1 - Math.exp(-dt * 2.6));
+    // Velocidad en unidades de media pantalla por segundo (para inclinar el cuerpo al volar).
+    const vx = dt > 0 ? (cur.x - prevX) / dt / (innerWidth / 2) : 0;
+    const vy = dt > 0 ? -(cur.y - prevY) / dt / (innerHeight / 2) : 0;
+
+    const km = 1 - Math.exp(-dt * 2);
+    mouse.sx = lerp(mouse.sx, mouse.x, km);
+    mouse.sy = lerp(mouse.sy, mouse.y, km);
+    const hover = Math.sin(t * 2.1) * .045 + Math.sin(t * 3.7) * .015;
+
+    const pitch = cur.pitch - clamp(vy * 22, -28, 28) + Math.sin(t * 2.1 + 1) * 3 + mouse.sy * 6;
+    const roll = cur.roll + clamp(vx * 18, -30, 30) + Math.sin(t * 1.7) * 4;
+    place(cur.x, cur.y, cur.size, cur.yaw + mouse.sx * 12, pitch, roll, halfH, halfW,
+      Math.sin(t * 1.3) * .04 + mouse.sx * .12, hover * halfH * .5 + mouse.sy * .08, Math.sin(t * .9) * .15);
+
+    if (mixer) {
+      mixer.timeScale = 1 + tg.moving * .25;
+      mixer.update(dt);
+    }
+    if (loadedModel) renderer.render(scene, camera);
+  }
+  tick();
+</script>
+
+<!--
+  Cierva — «Realistic Animated Doe 3D Model» de WildMesh 3D (https://sketchfab.com/WildMesh_3D).
+  Fuente: https://sketchfab.com/3d-models/realistic-animated-doe-3d-model-b6172618aa304473a4cf7b9246c0a218
+  Licencia: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Detalle en LICENCIA-CIERVA.txt.
+-->
+<script type="module">
+  import * as THREE from "three";
+  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+  import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+  import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+  // Mismo esquema que el colibrí: GLB cifrado (AES-256-GCM) que se descifra en memoria.
+  const DOE_URL = "assets/models/cierva.bin?v=3"; // subir la versión al cambiar el modelo
+  const DOE_KEY = "dhBhDdHUSrxWpmOjwLMlobq7G7D8nNlfSjJeWErkp7U=";
+  // La cierva nunca se queda quieta: camina por su franja, frena a pastar o a respirar, se da
+  // vuelta mirando hacia el visitante y sigue. La caminata trae su avance en el hueso raíz: se
+  // quita del clip y ese mismo avance se aplica al modelo, así las patas no patinan.
+  const WALK = "WalkSlow", BREATH = "Stand_Breathing_01", EAT = "Stand_Eating_01";
+  const ROOT_TRACK = "RigRoot_01.position";
+  const FADE = .7;              // fundido entre animaciones (s)
+  const FACE = Math.PI / 2 - .22; // de perfil, apenas girada hacia el visitante
+  const FIT_H = .86;            // alto de la cierva respecto del lienzo
+  const GROUND = .9;            // altura de las patas: deja lugar abajo para la sombra
+  const MARGIN = .04;           // aire a los costados del recorrido (fracción del ancho)
+
+  const canvas = document.getElementById("doe");
+  const section = canvas.closest("section");
+  const reducedQuery = matchMedia("(prefers-reduced-motion: reduce)");
+  let reduced = reducedQuery.matches;
+
+  let renderer, scene, camera, mixer, holder, pivot, shadow, rigScale = 1;
+  let actions = {}, currentAction = null, walkSpeed = 0, visible = false, started = false;
+  let fit = 1, halfW = 1, halfH = 1, minX = 0, maxX = 0, span = 0, ground = 0, bodyLen = 1;
+  const clock = new THREE.Clock();
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const smooth = (t) => t * t * (3 - 2 * t);
+
+  // Estado del recorrido: x (posición), yaw (giro), target (próxima parada o salida).
+  const st = { mode: "idle", x: 0, yaw: FACE, target: 0, timer: 0, exiting: false };
+
+  async function decrypt(url) {
+    const data = await (await fetch(url)).arrayBuffer();
+    const raw = Uint8Array.from(atob(DOE_KEY), (ch) => ch.charCodeAt(0));
+    const k = await crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]);
+    return crypto.subtle.decrypt({ name: "AES-GCM", iv: new Uint8Array(data, 0, 12) }, k, new Uint8Array(data, 12));
+  }
+
+  function size() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    frame();
+    if (mixer) render();
+  }
+
+  // Encuadre: el alto de la cierva sigue al alto del lienzo; el ancho define por dónde camina.
+  let base = null;
+  function frame() {
+    if (!pivot) return;
+    if (!base) {
+      // Caja medida en el marco del modelo (cabeza en +Z), en la pose inicial.
+      model.updateMatrixWorld(true);
+      const b = new THREE.Box3().setFromObject(model);
+      base = { size: b.getSize(new THREE.Vector3()), center: b.getCenter(new THREE.Vector3()), minY: b.min.y };
+      pivot.position.set(-base.center.x, -base.minY, -base.center.z);
+    }
+    halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
+    halfW = halfH * camera.aspect;
+    fit = Math.min((halfH * 2 * FIT_H) / base.size.y, (halfW * 2 * .55) / base.size.z);
+    holder.scale.setScalar(fit);
+    bodyLen = base.size.z * fit;
+    ground = -halfH * GROUND;
+    // Zona donde frena (visible) y puntos de entrada/salida, fuera del lienzo.
+    span = Math.max(0, halfW * (1 - MARGIN * 2) - bodyLen * .55);
+    minX = -halfW - bodyLen * .7; maxX = halfW + bodyLen * .7;
+    st.x = clamp(st.x, minX, maxX);
+    st.target = clamp(st.target, minX, maxX);
+    walkSpeed = Math.abs(walkSpeedLocal * rigScale * fit); // la escala del rig viene espejada (negativa)
+    place();
+  }
+
+  function place() {
+    holder.position.set(st.x, ground, 0);
+    holder.rotation.y = st.yaw;
+    shadow.position.set(st.x, ground, -bodyLen * .1);
+    // La sombra se alarga de perfil y se acorta cuando la cierva mira de frente.
+    const side = Math.abs(Math.sin(st.yaw));
+    shadow.scale.set(bodyLen * (.45 + .65 * side), halfH * .16, 1);
+  }
+
+  function render() { renderer.render(scene, camera); }
+
+  function play(name, timeScale = 1) {
+    const next = actions[name];
+    next.timeScale = timeScale;
+    if (currentAction === next) return;
+    next.reset().setEffectiveWeight(1).play();
+    if (currentAction) currentAction.crossFadeTo(next, FADE, false);
+    currentAction = next;
+  }
+
+  /* ---------- Comportamiento ---------- */
+  function startIdle() {
+    st.mode = "idle";
+    // Pastar dura un ciclo completo del clip (no se corta a mitad de bocado); respirar, dos.
+    const eat = Math.random() < .55;
+    play(eat ? EAT : BREATH);
+    st.timer = eat ? actions[EAT].getClip().duration : actions[BREATH].getClip().duration * (Math.random() < .5 ? 1 : 2);
+  }
+
+  // Siempre camina hacia adelante (a la derecha): frena una o dos veces a pastar o respirar
+  // dentro del lienzo, sale por la derecha y vuelve a entrar por la izquierda.
+  function startMove() {
+    const next = st.x + rand(span * .5, span * .95);
+    st.exiting = next > span;
+    st.target = st.exiting ? maxX : next;
+    st.mode = "walk";
+    play(WALK, 1);
+  }
+
+  function step(dt) {
+    if (st.mode === "idle") {
+      st.timer -= dt;
+      if (st.timer <= FADE * .5) startMove();
+    } else if (st.mode === "walk") {
+      // Frena con suavidad antes de cada parada; al salir sigue a paso parejo.
+      const left = st.target - st.x;
+      const ease = st.exiting ? 1 : clamp(left / (bodyLen * .5), .35, 1);
+      actions[WALK].timeScale = ease;
+      st.x += walkSpeed * ease * dt;
+      if (st.x >= st.target - 0.002) {
+        if (st.exiting) {
+          // Fuera de vista: reaparece por la izquierda y entra caminando.
+          st.x = minX;
+          st.exiting = false;
+          st.target = rand(-span, span * .1);
+        } else {
+          st.x = st.target;
+          startIdle();
         }
+      }
+    }
+    place();
+  }
 
-        // Mobile Menu Logic
-        const menuToggle = document.getElementById('menu-toggle');
-        const menuClose = document.getElementById('menu-close');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
+  let running = false;
+  function loop() {
+    if (!visible || reduced) { running = false; return; }
+    requestAnimationFrame(loop);
+    const dt = Math.min(clock.getDelta(), .05);
+    step(dt);
+    mixer.update(dt);
+    render();
+  }
 
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.add('open');
-            document.body.style.overflow = 'hidden'; 
-        });
+  function applyMotion() {
+    if (!mixer) return;
+    if (reduced) {
+      // Quieta, de perfil, en la primera pose de respirar y sin bucle de dibujo.
+      mixer.stopAllAction();
+      currentAction = null;
+      st.mode = "idle"; st.yaw = FACE; st.x = 0;
+      actions[BREATH].reset().play();
+      currentAction = actions[BREATH];
+      mixer.update(0);
+      place();
+      render();
+    } else if (visible && !running) {
+      running = true;
+      clock.getDelta();
+      loop();
+    }
+  }
+  reducedQuery.addEventListener("change", (e) => { reduced = e.matches; applyMotion(); });
 
-        const closeMenu = () => {
-            mobileMenu.classList.remove('open');
-            document.body.style.overflow = ''; 
-        };
+  let model = null, walkSpeedLocal = 0;
+  async function start() {
+    started = true;
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "low-power" });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 760 ? 1.5 : 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.NeutralToneMapping;
 
-        menuClose.addEventListener('click', closeMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+    scene = new THREE.Scene();
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+    pmrem.dispose();
+    scene.add(new THREE.HemisphereLight(0xf1fbf4, 0x2d6a4f, 1.3));
+    const key = new THREE.DirectionalLight(0xfff1d6, 2.6);
+    key.position.set(3, 5, 6);
+    const rim = new THREE.DirectionalLight(0xd2f0dc, 2.2);
+    rim.position.set(-5, 2, -4);
+    scene.add(key, rim);
 
-        // Lightbox Logic
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
+    camera = new THREE.PerspectiveCamera(22, 1, .1, 100);
+    camera.position.set(0, 0, 10);
 
-        function openLightbox(src) {
-            // Cambiar a alta resolución si es Unsplash (truco de URL)
-            // Si la URL tiene parametros, intentamos ajustarlos, si no, usamos la original
-            let highResSrc = src;
-            if(src.includes('images.unsplash.com')){
-                 highResSrc = src.replace('&w=600', '&w=1600').replace('&w=800', '&w=1600').replace('&w=1200', '&w=1600');
-            }
-            
-            lightboxImg.src = highResSrc;
-            lightbox.classList.add('open');
-            document.body.style.overflow = 'hidden'; // Bloquear scroll
-        }
+    // Sombra de contacto: elipse difusa bajo las patas.
+    const sc = document.createElement("canvas");
+    sc.width = 128; sc.height = 32;
+    const g = sc.getContext("2d");
+    const grad = g.createRadialGradient(64, 16, 0, 64, 16, 64);
+    grad.addColorStop(0, "rgba(27,67,50,.4)");
+    grad.addColorStop(.55, "rgba(27,67,50,.15)");
+    grad.addColorStop(1, "rgba(27,67,50,0)");
+    g.setTransform(1, 0, 0, .25, 0, 12);
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 128, 128);
+    shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1),
+      new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false, toneMapped: false }));
+    shadow.renderOrder = -1;
+    scene.add(shadow);
 
-        function closeLightbox() {
-            lightbox.classList.remove('open');
-            document.body.style.overflow = ''; // Restaurar scroll
-            setTimeout(() => { lightboxImg.src = ''; }, 300); // Limpiar src después de la animación
-        }
+    const buf = await decrypt(DOE_URL);
+    const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(buf, "");
+    model = gltf.scene;
+    model.traverse((o) => {
+      if (!o.isMesh) return;
+      o.frustumCulled = false;
+      for (const m of [].concat(o.material)) m.envMapIntensity = .7;
+    });
+    pivot = new THREE.Group();
+    pivot.add(model);
+    holder = new THREE.Group();
+    holder.add(pivot);
+    scene.add(holder);
 
-        // Cerrar lightbox al hacer click fuera de la imagen
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
+    // Avance de la caminata: lo que se desplaza el hueso raíz en un ciclo, pasado a escala del modelo.
+    const walkClip = THREE.AnimationClip.findByName(gltf.animations, WALK);
+    const rootTrack = walkClip.tracks.find((t) => t.name === ROOT_TRACK);
+    if (rootTrack) {
+      const v = rootTrack.values, n = v.length;
+      walkSpeedLocal = Math.hypot(v[n - 3] - v[0], v[n - 1] - v[2]) / walkClip.duration;
+      walkClip.tracks = walkClip.tracks.filter((t) => t !== rootTrack);
+      const rig = model.getObjectByName("RigRoot_01");
+      model.updateMatrixWorld(true);
+      rigScale = rig?.parent ? rig.parent.getWorldScale(new THREE.Vector3()).x : 1;
+    }
 
-        // Cerrar con tecla ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('open')) {
-                closeLightbox();
-            }
-        });
+    mixer = new THREE.AnimationMixer(model);
+    for (const name of [WALK, BREATH, EAT]) {
+      const a = mixer.clipAction(THREE.AnimationClip.findByName(gltf.animations, name));
+      a.setLoop(THREE.LoopRepeat, Infinity);
+      actions[name] = a;
+    }
 
-        // Navbar Blur effect on scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-md');
-            } else {
-                navbar.classList.remove('shadow-md');
-            }
-            reveal();
-        });
+    size();
+    // Empieza a la izquierda, ya a la vista, mirando hacia la foto del cerro.
+    st.x = -span * .7;
+    st.yaw = FACE;
+    startIdle();
+    st.timer = 2.5; // primer paso enseguida
+    mixer.update(0);
+    place();
+    addEventListener("resize", size);
+    canvas.classList.add("ready");
+    applyMotion();
+  }
 
-        document.addEventListener("DOMContentLoaded", reveal);
-    </script>
-
+  // Carga diferida: recién cuando la sección se acerca a la pantalla.
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    if (visible && !started) start().catch((err) => console.error(err));
+    else if (visible && mixer) applyMotion();
+  }, { rootMargin: "60% 0px" }).observe(section);
+</script>
 </body>
 </html>

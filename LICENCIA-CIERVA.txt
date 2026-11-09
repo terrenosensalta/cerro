@@ -1,0 +1,18 @@
+Modelo 3D: Realistic Animated Doe 3D Model
+Autor: WildMesh 3D (https://sketchfab.com/WildMesh_3D)
+Fuente: https://sketchfab.com/3d-models/realistic-animated-doe-3d-model-b6172618aa304473a4cf7b9246c0a218
+Licencia: Creative Commons Attribution 4.0 (CC BY 4.0)
+Texto de la licencia: https://creativecommons.org/licenses/by/4.0/
+Verificación: ficha oficial de Sketchfab (sección Licensing information: "CC Attribution — Author must be
+credited. Commercial use is allowed.") y API de Sketchfab, consultadas 2026-11-08.
+
+Cambios hechos al original (la licencia pide indicarlos):
+- Se dejaron solo dos animaciones: Stand_Breathing_01 y Stand_Eating_01 (el original trae 55).
+- Materiales pasados de spec/gloss a metal/rough (mismo color difuso) y texturas convertidas a WebP.
+- Geometría y animaciones comprimidas (cuantización + EXT_meshopt_compression).
+- Peso: GLB descargado 7,9 MB -> 0,35 MB.
+
+Atribución visible: en el pie de la página (index.html, bloque .credits).
+
+Uso en esta web: el modelo se sirve cifrado (AES-256-GCM) como assets/models/cierva.bin y se descifra
+en memoria para mostrarlo, igual que el colibrí. No se ofrece el GLB como descarga.
