@@ -32,7 +32,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="preload" href="assets/models/colibri.bin?v=4" as="fetch" type="application/octet-stream" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js" crossorigin>
+<link rel="preload" href="assets/models/colibri.bin?v=5" as="fetch" fetchpriority="high" type="application/octet-stream" crossorigin>
 <style>
   :root {
     --ink: #081c15; --forest: #1b4332; --leaf: #2d6a4f; --moss: #52b788; --mint: #b7e4c7;
@@ -365,7 +367,7 @@
   </section>
 
   <section class="s3" id="educacion" data-theme="light">
-    <img class="flower flower--leaf3" data-speed="-0.2" data-rot="-10" src="assets/img/lapacho-lateral.webp" alt="">
+    <img class="flower flower--leaf3" data-speed="-0.2" data-rot="-10" src="assets/img/lapacho-lateral.webp" alt="" loading="lazy">
     <div class="perch" data-yaw="160" data-pitch="8" data-roll="4"></div>
     <div class="text">
       <div class="num reveal">03</div>
@@ -410,7 +412,7 @@
   </section>
 
   <section class="foot" id="llegar" data-theme="light">
-    <img class="flower flower--fern" data-speed="0.3" data-rot="-6" src="assets/img/lapacho-colgante.webp" alt="">
+    <img class="flower flower--fern" data-speed="0.3" data-rot="-6" src="assets/img/lapacho-colgante.webp" alt="" loading="lazy">
     <div class="cta">
       <span class="eyebrow reveal">Cómo llegar</span>
       <h2 class="title reveal d1">El refugio de paz <em>a minutos de Salta</em></h2>
@@ -441,11 +443,11 @@
 <script type="module">
   import * as THREE from "three";
   import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-  import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+  import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
   import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
   // Modelo integrado y cifrado (AES-256-GCM) por exigencia de su licencia: se descifra en memoria.
-  const MODEL_URL = "assets/models/colibri.bin?v=4";
+  const MODEL_URL = "assets/models/colibri.bin?v=5";
   const MODEL_KEY = "L0eUCGmduJX6cgjUEKFrEjFK3hvaqflGBjvDyC9QetU=";
   async function loadModel(url) {
     const data = await (await fetch(url)).arrayBuffer();
@@ -460,7 +462,6 @@
     // Aleteo: tramo 36–96 (30 fps) que enlaza sin salto; sin las pistas que desplazan el cuerpo entero.
     clip: { start: 36, end: 96, fps: 30, drop: /^(Bone|Armature)\.(position|quaternion|scale)$/ },
   };
-  const DRACO_PATH = "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/";
 
   const reducedQuery = matchMedia("(prefers-reduced-motion: reduce)");
   let reduced = reducedQuery.matches;
@@ -543,10 +544,8 @@
     onScroll();
   }
   reducedQuery.addEventListener("change", (e) => { reduced = e.matches; applyMotionPreference(); });
-  const draco = new DRACOLoader().setDecoderPath(DRACO_PATH);
-  draco.preload(); // el decodificador baja en paralelo con el modelo
   const modelFailed = (err) => { console.error(err); reveal(); };
-  loadModel(MODEL_URL).then((buf) => new GLTFLoader().setDRACOLoader(draco).parse(buf, "", (gltf) => {
+  loadModel(MODEL_URL).then((buf) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parse(buf, "", (gltf) => {
     const model = gltf.scene;
     model.traverse((o) => {
       if (!o.isMesh) return;
