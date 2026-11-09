@@ -32,7 +32,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js" crossorigin>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js" crossorigin>
 <link rel="preload" href="assets/models/colibri.bin?v=5" as="fetch" fetchpriority="high" type="application/octet-stream" crossorigin>
 <style>
@@ -301,7 +301,7 @@
 </style>
 <script type="importmap">
   { "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
       "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
   } }
 </script>
@@ -333,6 +333,13 @@
       </div>
     </div>
   </section>
+  <script>
+    // La página se abre sin esperar al colibrí 3D: tipografías listas o, como mucho, 1,2 s.
+    Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1200))]).then(() => {
+      document.getElementById("loader").classList.add("done");
+      document.body.classList.add("loaded");
+    });
+  </script>
 
   <section class="s1" id="ubicacion" data-theme="light">
     <canvas id="doe" aria-hidden="true"></canvas>
@@ -570,6 +577,13 @@
     }
     applyMotionPreference();
     loadedModel = true;
+    // Entrada: aparece fuera de pantalla, a la derecha, y vuela hasta su hueco (el seguimiento
+    // suave del bucle hace el vuelo e inclina el cuerpo según la velocidad).
+    if (!reduced) {
+      const tg = targetAt();
+      Object.assign(cur, { x: innerWidth + tg.size * 1.2, y: tg.y - innerHeight * .18, size: tg.size * .85 });
+      clock.getDelta();
+    }
     canvas.classList.add("ready");
     reveal();
   }, modelFailed)).catch(modelFailed);
@@ -669,7 +683,7 @@
       Math.sin(t * 1.3) * .04 + mouse.sx * .12, hover * halfH * .5 + mouse.sy * .08, Math.sin(t * .9) * .15);
 
     if (mixer) {
-      mixer.timeScale = 1 + tg.moving * .25;
+      mixer.timeScale = 1 + tg.moving * .25 + Math.min(Math.hypot(vx, vy), 1.5) * .3;
       mixer.update(dt);
     }
     if (loadedModel) renderer.render(scene, camera);
