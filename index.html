@@ -179,6 +179,11 @@
   .s4 { color: #fff; z-index: 2; background: radial-gradient(ellipse 60% 70% at 78% 62%, #2d6a4f 0%, #1b4332 48%, #0d2a1f 100%); }
   .s4 .godomar { position: relative; z-index: 1; height: 62vh; width: auto; margin: 0 auto; filter: drop-shadow(0 30px 40px rgba(0,0,0,.35)); }
   .s4 .text { position: relative; z-index: 2; }
+  /* 04 · MAPA (reemplaza a Godomar) */
+  .s4m { color: #fff; z-index: 2; background: radial-gradient(ellipse 70% 70% at 70% 55%, #2d6a4f 0%, #1b4332 50%, #0d2a1f 100%); }
+  .s4m .text { position: relative; z-index: 2; }
+  .map-frame { position: relative; z-index: 1; height: 66vh; min-height: 380px; margin: 0 -8px; border-radius: 22px; overflow: hidden; background: #0d2a1f; box-shadow: 0 30px 60px -20px rgba(0,0,0,.5), 0 0 0 1px rgba(183,228,199,.16); }
+  .map-frame iframe { position: absolute; left: 0; top: -82px; width: 100%; height: calc(100% + 82px); border: 0; }
   .ticks { margin-top: 20px; display: grid; gap: 10px; }
   .ticks li { list-style: none; display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: rgba(233,246,239,.88); }
   .ticks li::before { content: ""; width: 22px; height: 22px; flex: none; border-radius: 50%; background: rgba(82,183,136,.22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23b7e4c7' stroke-width='1.8'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-5'/%3E%3C/svg%3E") center/12px no-repeat; }
@@ -216,7 +221,7 @@
     .nav__links { display: none; }
     .nav__cta { padding: 10px 16px; font-size: 12.5px; }
     .logo img { height: 32px; }
-    .s2 .perch, .s4 .perch { height: 22vh; }
+    .s2 .perch, .s4 .perch, .s4m .perch { height: 22vh; }
     /* Sección 01: el colibrí vuela arriba a la izquierda, junto a la cierva, antes del texto. */
     .s1 .perch { position: absolute; left: 2%; top: 80px; width: 46%; height: 15vh; }
     .s1 #doe { margin: 11vh -22px 0; width: calc(100% + 44px); height: 22vh; }
@@ -257,6 +262,9 @@
     .s4 .text { position: absolute; left: 7vw; top: 20vh; width: min(480px, 40vw); }
     .s4 .godomar { position: absolute; right: 8vw; bottom: 0; height: 84vh; margin: 0; }
     .s4 .perch { right: 1.5vw; top: 26vh; width: 17vw; height: 24vh; }
+    .s4m .text { position: absolute; left: 7vw; top: 50%; transform: translateY(-50%); width: min(420px, 29vw); }
+    .s4m .map-frame { position: absolute; left: 40vw; right: 4vw; top: 12vh; bottom: 10vh; height: auto; margin: 0; border-radius: 26px; }
+    .s4m .perch { left: 23vw; width: 14vw; top: 70vh; height: 20vh; }
 
     .foot { display: block; }
     .foot .flower--fern { width: clamp(280px, 25vw, 480px); right: -2vw; top: -3vh; opacity: 1; }
@@ -301,7 +309,7 @@
 
 <nav class="nav" aria-label="Principal">
   <a class="logo" href="#inicio" aria-label="Cerro Varnet, inicio"><img src="assets/img/logo-varnet.webp" alt="Reserva natural privada Cerro Varnet" width="724" height="274"></a>
-  <div class="nav__links"><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#educacion">Educación</a><a href="#godomar">Godomar</a></div>
+  <div class="nav__links"><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#educacion">Educación</a><a href="#mapa">Mapa</a></div>
   <a class="nav__cta" href="#llegar">Cómo llegar</a>
 </nav>
 
@@ -334,7 +342,7 @@
         <a class="btn" href="https://www.google.com/maps/dir/Universidad+Nacional+de+Salta,+Av.+Bolivia,+Salta/''/@-24.701595,-65.4184923,7049m/data=!3m2!1e3!4b1!4m13!4m12!1m5!1m1!1s0x941bc113ff725893:0x2981a8b51a8d1fbd!2m2!1d-65.4099398!2d-24.7276565!1m5!1m1!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!2m2!1d-65.3852814!2d-24.6756142" target="_blank" rel="noopener">Cómo llegar con GPS <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
         <a class="btn btn--ghost" href="https://www.google.com/maps/place/Cerro+Varnet+-+Reserva+Natural+Privada/@-24.6756093,-65.3878563,881m/data=!3m2!1e3!4b1!4m6!3m5!1s0x941bc3b62d63f0bb:0x5ef98db541931bfd!8m2!3d-24.6756142!4d-65.3852814!16s%2Fg%2F11smqz7kqz" target="_blank" rel="noopener">Ver en Google Maps</a>
       </div>
-      <p class="links-list reveal d4"><a href="https://www.google.com/maps/d/u/0/edit?mid=1hNGZmpvYtX6vHf-j8pjVS_Pa_UiPKZI&usp=sharing" target="_blank" rel="noopener">Abrir el mapa de senderos →</a></p>
+      <p class="links-list reveal d4"><a href="#mapa">Ver el mapa de senderos →</a></p>
     </div>
     <div class="perch" data-yaw="125" data-pitch="10" data-roll="6"></div>
   </section>
@@ -371,7 +379,23 @@
     </div>
   </section>
 
-  <section class="s4 dark" id="godomar" data-theme="dark">
+  <section class="s4m dark" id="mapa" data-theme="dark">
+    <div class="text">
+      <div class="num reveal">04</div>
+      <span class="eyebrow reveal d1">Mapa de la reserva</span>
+      <h2 class="title reveal d1">Conocé el cerro <em>antes de pisarlo</em></h2>
+      <p class="copy reveal d2">Senderos, miradores, la cascada y las zonas donde viven corzuelas, pavas y liebres, con el acceso desde la Ruta 9. Tocá cada punto del mapa para ver el detalle.</p>
+      <div class="btns reveal d3"><a class="btn" href="https://www.google.com/maps/d/u/0/edit?mid=1hNGZmpvYtX6vHf-j8pjVS_Pa_UiPKZI&amp;usp=sharing" target="_blank" rel="noopener">Abrir en Google Maps <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a></div>
+    </div>
+    <div class="perch" data-yaw="200" data-pitch="4" data-roll="2"></div>
+    <div class="map-frame reveal d2">
+      <!-- Mapa de Google My Maps de la reserva. Se corre hacia arriba para esconder la barra negra del título de My Maps. -->
+      <iframe title="Mapa de senderos de la reserva Cerro Varnet" src="https://www.google.com/maps/d/embed?mid=1hNGZmpvYtX6vHf-j8pjVS_Pa_UiPKZI&amp;ehbc=1B4332&amp;ll=-24.6772%2C-65.3805&amp;z=15" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <!-- Sección «Godomar»: oculta a pedido; se vuelve a mostrar quitando «hidden». -->
+  <section class="s4 dark" id="godomar" data-theme="dark" hidden>
     <div class="text">
       <div class="num reveal">04</div>
       <span class="eyebrow reveal d1">Asistente virtual</span>
@@ -400,7 +424,7 @@
     <div class="base reveal">
       <div class="brand"><img src="assets/img/logo-varnet.webp" alt="Reserva natural privada Cerro Varnet" width="724" height="274" loading="lazy"><p>Reserva natural privada orientada al turismo de naturaleza y contemplación.</p></div>
       <div class="cols">
-        <div><h4>Explorá</h4><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#educacion">Educación</a><a href="#godomar">Godomar</a></div>
+        <div><h4>Explorá</h4><a href="#ubicacion">Ubicación</a><a href="#senderos">Senderos</a><a href="#educacion">Educación</a><a href="#mapa">Mapa</a></div>
         <div><h4>Contacto</h4><span>Salta, Argentina</span><span>A 20 min del centro de Salta</span><a href="https://www.instagram.com/cerrovarnet.ok/" target="_blank" rel="noopener">@cerrovarnet.ok</a></div>
       </div>
     </div>
@@ -441,7 +465,7 @@
   let reduced = reducedQuery.matches;
 
   /* ---------- Efectos de scroll en el DOM ---------- */
-  const sections = [...document.querySelectorAll("main > section")];
+  const sections = [...document.querySelectorAll("main > section:not([hidden])")];
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("in"); });
   }, { threshold: 0, rootMargin: "0px 0px -22% 0px" });
